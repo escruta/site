@@ -1,2 +1,2 @@
-export const repoUrl = "https://github.com/francids/escruta";
+export const repoUrl = "https://github.com/escruta/app";
 export const appUrl = repoUrl;

@@ -1,0 +1,9 @@
+{
+  "main": "dist/_worker.js/index.js",
+  "name": "escruta",
+  "compatibility_date": "2025-12-28",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

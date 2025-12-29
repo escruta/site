@@ -18,9 +18,10 @@ const navbarOptions: NavbarOption[] = [
 ---
 
 <nav
-  class="animate-fade-in-down px-16 py-4 bg-gray-900/85 border-b border-blue-700 rounded-xs flex items-center justify-between backdrop-blur-lg transition-all duration-300 ease-out w-full fixed z-50"
+  id="main-navbar"
+  class="px-16 py-4 bg-gray-900/85 border-b border-blue-700 rounded-xs flex items-center justify-between backdrop-blur-lg transition-all duration-300 ease-out w-full fixed z-50"
 >
-  <div class="animate-fade-in-left animation-delay-200 flex items-center gap-6">
+  <div class="flex items-center gap-6">
     <a href="/" class="flex items-center group">
       <Logotype
         className="w-auto h-8 py-2 fill-white transition-all duration-300 group-hover:fill-blue-400"
@@ -31,7 +32,7 @@ const navbarOptions: NavbarOption[] = [
         navbarOptions.map((option, index) => (
           <a
             href={option.href}
-            class={`animate-fade-in-up animation-delay-${400 + index * 100} text-sm font-medium rounded-xs bg-gray-900 text-white hover:bg-gray-800 group relative border border-gray-800 transition-all duration-300 select-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 flex items-center gap-2 px-4 py-2`}
+            class={`text-sm font-medium rounded-xs bg-gray-900 text-white hover:bg-gray-800 group relative border border-gray-800 transition-all duration-300 select-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 flex items-center gap-2 px-4 py-2`}
           >
             {option.name}
           </a>
@@ -40,15 +41,13 @@ const navbarOptions: NavbarOption[] = [
     </div>
   </div>
 
-  <div
-    class="animate-fade-in-right animation-delay-300 flex items-center gap-2"
-  >
+  <div class="flex items-center gap-2">
     <div class="hidden lg:flex gap-2 items-center">
       <a
         href={repoUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="animate-fade-in-up animation-delay-700 text-sm font-medium rounded-xs bg-gray-900 text-white hover:bg-gray-800 group relative border border-gray-800 transition-all duration-300 select-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 flex items-center gap-2 px-4 py-2"
+        class="text-sm font-medium rounded-xs bg-gray-900 text-white hover:bg-gray-800 group relative border border-gray-800 transition-all duration-300 select-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 flex items-center gap-2 px-4 py-2"
       >
         <svg
           class="size-3 shrink-0"
@@ -65,7 +64,7 @@ const navbarOptions: NavbarOption[] = [
 
       <a
         href={appUrl}
-        class="animate-fade-in-up animation-delay-800 text-sm font-semibold rounded-xs bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900 transition-all duration-300 select-none flex items-center px-4 py-2"
+        class="text-sm font-semibold rounded-xs bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900 transition-all duration-300 select-none flex items-center px-4 py-2"
       >
         Get started
       </a>
@@ -74,7 +73,7 @@ const navbarOptions: NavbarOption[] = [
     <div class="lg:hidden relative">
       <button
         id="mobile-menu-button"
-        class="animate-fade-in-scale animation-delay-900 p-2 rounded-xs bg-gray-800/90 text-gray-100 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-gray-900 transition-all duration-300"
+        class="p-2 rounded-xs bg-gray-800/90 text-gray-100 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-gray-900 transition-all duration-300"
         aria-label="Toggle menu"
       >
         <svg
@@ -152,61 +151,6 @@ const navbarOptions: NavbarOption[] = [
 </div>
 
 <style>
-  @keyframes fade-in-down {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fade-in-left {
-    from {
-      opacity: 0;
-      transform: translateX(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes fade-in-right {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fade-in-scale {
-    from {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
   @keyframes menu-appear {
     from {
       opacity: 0;
@@ -216,53 +160,6 @@ const navbarOptions: NavbarOption[] = [
       opacity: 1;
       transform: scale(1) translateY(0);
     }
-  }
-
-  .animate-fade-in-down {
-    animation: fade-in-down 0.3s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animate-fade-in-left {
-    animation: fade-in-left 0.7s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animate-fade-in-right {
-    animation: fade-in-right 0.7s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.5s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animate-fade-in-scale {
-    animation: fade-in-scale 0.5s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animation-delay-200 {
-    animation-delay: 0.2s;
-  }
-  .animation-delay-300 {
-    animation-delay: 0.3s;
-  }
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-  }
-  .animation-delay-500 {
-    animation-delay: 0.5s;
-  }
-  .animation-delay-700 {
-    animation-delay: 0.7s;
-  }
-  .animation-delay-800 {
-    animation-delay: 0.8s;
-  }
-  .animation-delay-900 {
-    animation-delay: 0.9s;
   }
 
   #mobile-menu:not(.hidden) {
@@ -279,47 +176,57 @@ const navbarOptions: NavbarOption[] = [
 </style>
 
 <script>
-  const menuButton = document.getElementById("mobile-menu-button");
-  const mobileMenu = document.getElementById("mobile-menu");
-  const mobileBackdrop = document.getElementById("mobile-backdrop");
-  const menuIcon = document.getElementById("menu-icon");
-  const menuLinks = document.querySelectorAll(".mobile-menu-link");
+  function initNavbar() {
+    const menuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const mobileBackdrop = document.getElementById("mobile-backdrop");
+    const menuIcon = document.getElementById("menu-icon");
+    const menuLinks = document.querySelectorAll(".mobile-menu-link");
+    const navbar = document.getElementById("main-navbar");
 
-  const openIcon =
-    '<path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z" />';
-  const closeIcon =
-    '<path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path>';
+    if (!navbar) return;
 
-  function toggleMenu() {
-    const isOpen = !mobileMenu?.classList.contains("hidden");
+    if (navbar.dataset.listenersAttached) return;
+    navbar.dataset.listenersAttached = "true";
 
-    if (isOpen) {
-      mobileMenu?.classList.add("hidden");
-      mobileBackdrop?.classList.add("hidden");
-      if (menuIcon) {
-        menuIcon.innerHTML = openIcon;
-        menuIcon.classList.remove("rotated");
-      }
-    } else {
-      mobileMenu?.classList.remove("hidden");
-      mobileBackdrop?.classList.remove("hidden");
-      if (menuIcon) {
-        menuIcon.innerHTML = closeIcon;
-        menuIcon.classList.add("rotated");
+    const openIcon =
+      '<path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z" />';
+    const closeIcon =
+      '<path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path>';
+
+    function toggleMenu() {
+      const isOpen = !mobileMenu?.classList.contains("hidden");
+
+      if (isOpen) {
+        mobileMenu?.classList.add("hidden");
+        mobileBackdrop?.classList.add("hidden");
+        if (menuIcon) {
+          menuIcon.innerHTML = openIcon;
+          menuIcon.classList.remove("rotated");
+        }
+      } else {
+        mobileMenu?.classList.remove("hidden");
+        mobileBackdrop?.classList.remove("hidden");
+        if (menuIcon) {
+          menuIcon.innerHTML = closeIcon;
+          menuIcon.classList.add("rotated");
+        }
       }
     }
+
+    menuButton?.addEventListener("click", toggleMenu);
+    mobileBackdrop?.addEventListener("click", toggleMenu);
+
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", toggleMenu);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !mobileMenu?.classList.contains("hidden")) {
+        toggleMenu();
+      }
+    });
   }
 
-  menuButton?.addEventListener("click", toggleMenu);
-  mobileBackdrop?.addEventListener("click", toggleMenu);
-
-  menuLinks.forEach((link) => {
-    link.addEventListener("click", toggleMenu);
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !mobileMenu?.classList.contains("hidden")) {
-      toggleMenu();
-    }
-  });
+  document.addEventListener("astro:page-load", initNavbar);
 </script>

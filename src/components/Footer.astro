@@ -38,7 +38,7 @@ const socialLinks = [
   <div class="relative z-30">
     <div class="mx-auto px-6 md:px-24 py-16 md:py-20">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
-        <div class="lg:col-span-4 space-y-6 mr-12 animate-fade-in-up">
+        <div class="lg:col-span-4 space-y-6 mr-12">
           <Logotype className="w-auto h-5 fill-white" />
           <p class="text-gray-400 text-md leading-relaxed max-w-md">
             Open-source AI-powered research platform designed for researchers,
@@ -66,11 +66,8 @@ const socialLinks = [
         <div class="lg:col-span-8">
           <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             {
-              footerSections.map((section, sectionIndex) => (
-                <div
-                  class="animate-fade-in-up"
-                  style={`animation-delay: ${sectionIndex * 0.1}s;`}
-                >
+              footerSections.map((section) => (
+                <div>
                   <h3 class="text-white font-semibold text-sm uppercase tracking-wide mb-4">
                     {section.title}
                   </h3>
@@ -98,7 +95,7 @@ const socialLinks = [
       </div>
 
       <div
-        class="pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 animate-fade-in-up animation-delay-400"
+        class="pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center space-y-4 md:space-y-0"
       >
         <div class="text-gray-500 text-sm text-center md:text-left">
           Francisco Mesa &copy; {new Date().getFullYear()}. All rights reserved.
@@ -107,71 +104,3 @@ const socialLinks = [
     </div>
   </div>
 </footer>
-
-<style>
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.8s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-  }
-</style>
-
-<script>
-  function initFooterAnimations() {
-    const footer = document.querySelector("footer");
-    if (!footer) return;
-
-    const animatedElements = footer.querySelectorAll(".animate-fade-in-up");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-started");
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-
-    animatedElements.forEach((el) => {
-      (el as HTMLElement).style.animationPlayState = "paused";
-      observer.observe(el);
-    });
-
-    const startObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "class"
-        ) {
-          const target = mutation.target as HTMLElement;
-          if (target.classList.contains("animate-started")) {
-            target.style.animationPlayState = "running";
-          }
-        }
-      });
-    });
-
-    animatedElements.forEach((el) => {
-      startObserver.observe(el, { attributes: true });
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", initFooterAnimations);
-  document.addEventListener("astro:page-load", initFooterAnimations);
-</script>

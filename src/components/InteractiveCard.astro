@@ -1,9 +1,10 @@
 ---
 interface Props {
   class?: string;
+  style?: string;
 }
 
-const { class: className } = Astro.props;
+const { class: className, style } = Astro.props;
 ---
 
 <div
@@ -11,6 +12,7 @@ const { class: className } = Astro.props;
     "interactive-card group relative rounded-xs bg-gray-900/50 border border-gray-800 transition-all duration-300 cursor-pointer overflow-hidden",
     className,
   ]}
+  style={style}
 >
   <div
     class="glow-effect absolute inset-0 transition-opacity duration-300 pointer-events-none opacity-0"
@@ -45,13 +47,11 @@ const { class: className } = Astro.props;
       rgba(30, 64, 175, 0.6)
     );
     padding: 1px;
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+    mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    mask-clip: content-box, border-box;
     mask-composite: exclude;
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+    -webkit-mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    -webkit-mask-clip: content-box, border-box;
     -webkit-mask-composite: xor;
   }
 
@@ -61,14 +61,19 @@ const { class: className } = Astro.props;
       rgba(59, 130, 246, 0.3),
       rgba(30, 64, 175, 0.2)
     );
+    padding: 1px;
+    mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    -webkit-mask-clip: content-box, border-box;
+    -webkit-mask-composite: xor;
   }
 
   @media (max-width: 767px) {
     .interactive-card:active {
-      ring: 2px;
-      ring-offset: 2px;
-      ring-color: rgb(59, 130, 246);
-      outline: none;
+      outline: 2px solid rgb(59, 130, 246);
+      outline-offset: 2px;
     }
   }
 </style>

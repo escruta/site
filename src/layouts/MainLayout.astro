@@ -96,10 +96,10 @@ const { title, description, url, image, keywords, type, twitterCard } =
         const version = Date.now();
         function updateFavicon() {
           const faviconLight = document.getElementById(
-            "favicon-light"
+            "favicon-light",
           ) as HTMLLinkElement | null;
           const faviconDark = document.getElementById(
-            "favicon-dark"
+            "favicon-dark",
           ) as HTMLLinkElement | null;
 
           if (!faviconLight || !faviconDark) return;

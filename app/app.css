@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 body {
@@ -103,10 +102,6 @@ html.light body {
 
   /* Black */
   --color-black: #000;
-
-  /* Animations */
-  --animate-slow-pulse: ping 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-slow-bounce: bounce 4s infinite;
 }
 
 @supports (scrollbar-color: auto) {

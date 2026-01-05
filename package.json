@@ -3,22 +3,34 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "format": "biome format --write",
-    "lint": "biome check --fix",
-    "deploy": "astro build && wrangler deploy"
+    "dev": "react-router dev",
+    "build": "react-router build",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "format": "biome format",
+    "format:fix": "biome format --write"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.12",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.16.6",
-    "tailwindcss": "^4.1.18"
+    "@react-router/node": "7.10.1",
+    "@react-router/serve": "7.10.1",
+    "isbot": "^5.1.31",
+    "motion": "^12.23.26",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router": "7.10.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.10",
-    "wrangler": "^4.54.0"
+    "@biomejs/biome": "^2.3.11",
+    "@react-router/dev": "7.10.1",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^22",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

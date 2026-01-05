@@ -2,14 +2,9 @@
 
 _"Think, ask, learn"_
 
-**Escruta Site** is the marketing and informational website for the Escruta research assistant platform. It serves as the primary entry point for new users, providing an overview of features, use cases, and access to the platform.
+The landing page and informational website for the Escruta platform.
 
-## Technology Stack
-
-- **Runtime**: Node.js with npm package management.
-- **Framework**: Astro 5 for static site generation.
-- **Styling**: Tailwind CSS with custom design tokens.
-- **Components**: Astro components for modular and reusable UI elements.
+Built with React Router, TypeScript, Tailwind CSS, and Vite.
 
 ## Getting Started
 
@@ -22,10 +17,14 @@ _"Think, ask, learn"_
 1. `npm install` - Install dependencies
 2. `npm run dev` - Start the development server
 
-The landing page will be available at [localhost:4321](http://localhost:4321/) by default.
+The landing page will be available at [localhost:5173](http://localhost:5173/) by default.
 
 ### Development Scripts
 
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Create production build (static site generation)
-- `npm run preview` - Preview production build locally
+- `npm run dev` - Start development server
+- `npm run build` - Create production build
+- `npm run typecheck` - Run TypeScript and React Router for type checking
+- `npm run lint` - Run Biome for code quality checks
+- `npm run lint:fix` - Run Biome for code quality checks and fix issues
+- `npm run format` - Run Biome for code formatting
+- `npm run format:fix` - Run Biome for code formatting and fix issues

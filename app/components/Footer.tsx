@@ -102,6 +102,12 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        <img
+          src="/Icon.svg"
+          alt="Escruta"
+          className="hidden lg:block absolute top-16 right-20 size-40 opacity-20 grayscale"
+        />
       </div>
     </footer>
   );

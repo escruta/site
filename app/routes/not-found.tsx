@@ -1,4 +1,5 @@
 import type { Route } from "./+types/not-found";
+import { Button } from "../components/ui";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -20,12 +21,9 @@ export default function NotFound() {
       <p className="text-lg mb-4">
         The page you are looking for does not exist.
       </p>
-      <a
-        href="/"
-        className="bg-blue-500 text-white px-4 py-2 rounded-xs hover:bg-blue-600 transition duration-300 select-none"
-      >
+      <Button href="/" variant="primary">
         Go back to the application
-      </a>
+      </Button>
     </main>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Logotype from "./Logotype";
 import { repoUrl, appUrl } from "../config";
+import { Button } from "./ui";
 
 interface NavbarOption {
   name: string;
@@ -41,24 +42,28 @@ export default function Navbar() {
           </a>
           <div className="hidden lg:flex gap-2">
             {navbarOptions.map((option) => (
-              <a
+              <Button
                 key={option.name}
                 href={option.href}
-                className="text-sm font-medium rounded-xs bg-gray-900 text-white hover:bg-gray-800 group relative border border-gray-800 transition-all duration-300 select-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 flex items-center gap-2 px-4 py-2"
+                variant="secondary"
+                size="sm"
+                className="group relative"
               >
                 {option.name}
-              </a>
+              </Button>
             ))}
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <div className="hidden lg:flex gap-2 items-center">
-            <a
+            <Button
               href={repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium rounded-xs bg-gray-900 text-white hover:bg-gray-800 group relative border border-gray-800 transition-all duration-300 select-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 flex items-center gap-2 px-4 py-2"
+              variant="secondary"
+              size="sm"
+              className="group relative gap-2"
             >
               <svg
                 className="size-3 shrink-0"
@@ -69,21 +74,19 @@ export default function Navbar() {
                 <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26ZM12.0006 15.968L16.2473 18.3451L15.2988 13.5717L18.8719 10.2674L14.039 9.69434L12.0006 5.27502L9.96214 9.69434L5.12921 10.2674L8.70231 13.5717L7.75383 18.3451L12.0006 15.968Z" />
               </svg>
               Star on GitHub
-            </a>
+            </Button>
 
-            <a
-              href={appUrl}
-              className="text-sm font-semibold rounded-xs bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900 transition-all duration-300 select-none flex items-center px-4 py-2"
-            >
+            <Button href={appUrl} variant="primary" size="sm">
               Get started
-            </a>
+            </Button>
           </div>
 
           <div className="lg:hidden relative">
-            <button
+            <Button
               onClick={toggleMenu}
               type="button"
-              className="p-2 rounded-xs bg-gray-800/90 text-gray-100 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-gray-900 transition-all duration-300"
+              variant="icon"
+              size="icon"
               aria-label="Toggle menu"
             >
               <motion.svg
@@ -99,7 +102,7 @@ export default function Navbar() {
                   <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z" />
                 )}
               </motion.svg>
-            </button>
+            </Button>
 
             <AnimatePresence>
               {isMobileMenuOpen && (
@@ -111,11 +114,12 @@ export default function Navbar() {
                 >
                   <div className="py-1">
                     {navbarOptions.map((option) => (
-                      <a
+                      <Button
                         key={option.name}
                         href={option.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-white hover:bg-gray-800/80 active:bg-gray-700 transition-all duration-200 border-b border-gray-700/30"
+                        variant="ghost"
+                        className="w-full justify-start rounded-none px-4 py-3 gap-3"
                       >
                         {option.icon && (
                           <svg
@@ -128,15 +132,16 @@ export default function Navbar() {
                           </svg>
                         )}
                         {option.name}
-                      </a>
+                      </Button>
                     ))}
 
-                    <a
+                    <Button
                       href={repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-white hover:bg-gray-800/80 active:bg-gray-700 transition-all duration-200 border-b border-gray-700/30"
+                      variant="ghost"
+                      className="w-full justify-start rounded-none px-4 py-3 gap-3"
                     >
                       <svg
                         className="size-4 shrink-0"
@@ -147,16 +152,17 @@ export default function Navbar() {
                         <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26ZM12.0006 15.968L16.2473 18.3451L15.2988 13.5717L18.8719 10.2674L14.039 9.69434L12.0006 5.27502L9.96214 9.69434L5.12921 10.2674L8.70231 13.5717L7.75383 18.3451L12.0006 15.968Z" />
                       </svg>
                       Star on GitHub
-                    </a>
+                    </Button>
 
                     <div className="px-3 py-2">
-                      <a
+                      <Button
                         href={appUrl}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="block w-full px-4 py-3 text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200 rounded-xs text-center"
+                        variant="primary"
+                        className="w-full"
                       >
                         Get started
-                      </a>
+                      </Button>
                     </div>
                   </div>
                 </motion.div>

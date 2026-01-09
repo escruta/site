@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import appDesktopImage from "../assets/AppDesktop.webp";
 import { repoUrl, appUrl } from "../config";
+import { Button } from "./ui";
 import GradientAnimationBackground from "./backgrounds/GradientAnimationBackground";
 import SimpleBackground from "./backgrounds/SimpleBackground";
 import InteractiveCard from "./InteractiveCard";
@@ -79,12 +80,14 @@ export default function HeroSection() {
             animate={fadeInScale.animate}
             transition={{ ...fadeInScale.transition, delay: 0.8 }}
           >
-            <a
+            <Button
               href={appUrl}
-              className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-xs bg-blue-600 px-6 md:px-8 font-semibold text-white hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 select-none w-full md:w-auto"
+              variant="primary"
+              size="lg"
+              className="group relative overflow-hidden w-full md:w-auto"
             >
               Start exploring
-            </a>
+            </Button>
           </motion.div>
           <motion.div
             className="w-full md:w-auto"
@@ -92,14 +95,16 @@ export default function HeroSection() {
             animate={fadeInScale.animate}
             transition={{ ...fadeInScale.transition, delay: 1.0 }}
           >
-            <a
+            <Button
               href={repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gray-900 text-white hover:bg-gray-800 group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-xs border border-gray-800 px-6 md:px-8 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 select-none w-full md:w-auto"
+              variant="secondary"
+              size="lg"
+              className="group relative overflow-hidden w-full md:w-auto"
             >
               Source code
-            </a>
+            </Button>
           </motion.div>
         </motion.div>
 

@@ -28,3 +28,5 @@ The landing page will be available at [localhost:5173](http://localhost:5173/) b
 - `npm run lint:fix` - Run Biome for code quality checks and fix issues
 - `npm run format` - Run Biome for code formatting
 - `npm run format:fix` - Run Biome for code formatting and fix issues
+- `npm run cf-typegen` - Generate Cloudflare types
+- `npm run deploy` - Build and deploy to Cloudflare

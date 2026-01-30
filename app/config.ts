@@ -1,2 +1,2 @@
-export const repoUrl = "https://github.com/escruta/app";
-export const appUrl = repoUrl;
+export const repoUrl = "https://github.com/escruta";
+export const appUrl = "https://app.escruta.com";

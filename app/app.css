@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
 
 body {
   scroll-behavior: smooth;
@@ -9,18 +8,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-family: var(--font-sans);
-  background-color: var(--color-gray-900);
-  color: var(--color-gray-900);
-}
-
-html.dark body {
-  background-color: var(--color-gray-900);
+  background-color: var(--color-gray-950);
   color: var(--color-white);
-}
-
-html.light body {
-  background-color: var(--color-white);
-  color: var(--color-gray-900);
 }
 
 *::selection {
@@ -89,16 +78,16 @@ html.light body {
 
   /* Gray */
   --color-gray-50: #fafafa;
-  --color-gray-100: #e6e6e6;
-  --color-gray-200: #d1d1d1;
-  --color-gray-300: #b0b0b0;
-  --color-gray-400: #909090;
-  --color-gray-500: #6b6b6b;
-  --color-gray-600: #525252;
-  --color-gray-700: #363636;
-  --color-gray-800: #222222;
-  --color-gray-900: #121212;
-  --color-gray-950: #070707;
+  --color-gray-100: #eaeaea;
+  --color-gray-200: #dadada;
+  --color-gray-300: #c0c0c0;
+  --color-gray-400: #a0a0a0;
+  --color-gray-500: #808080;
+  --color-gray-600: #606060;
+  --color-gray-700: #404040;
+  --color-gray-800: #2a2a2a;
+  --color-gray-900: #1a1a1a;
+  --color-gray-950: #0a0a0a;
 
   /* Black */
   --color-black: #000;
@@ -106,19 +95,7 @@ html.light body {
 
 @supports (scrollbar-color: auto) {
   * {
-    scrollbar-color: var(--color-gray-300) transparent;
-    scrollbar-width: thin;
-  }
-
-  html.dark * {
     scrollbar-color: var(--color-gray-500) transparent;
     scrollbar-width: thin;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    html:not(.dark):not(.light) * {
-      scrollbar-color: var(--color-gray-500) transparent;
-      scrollbar-width: thin;
-    }
   }
 }

@@ -1,10 +1,10 @@
+import { Link } from "react-router";
 import { repoUrl } from "../config";
 import Logotype from "./Logotype";
 
 interface FooterLink {
   name: string;
-  href: string;
-  external?: boolean;
+  to: string;
 }
 
 interface FooterSection {
@@ -14,15 +14,21 @@ interface FooterSection {
 
 const footerSections: FooterSection[] = [
   {
-    title: "Open Source",
+    title: "Open source",
     links: [
-      { name: "Source Code", href: repoUrl, external: true },
-      { name: "Issues", href: `${repoUrl}/issues`, external: true },
+      { name: "Source code", to: repoUrl },
+      { name: "Issues", to: `${repoUrl}/app/issues` },
     ],
   },
 ];
 
-const socialLinks = [
+interface SocialLink {
+  name: string;
+  href: string;
+  icon: React.ReactNode;
+}
+
+const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
     href: repoUrl,
@@ -34,34 +40,34 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="z-25 relative bg-gray-900 border-t border-gray-800 overflow-hidden">
+    <footer className="z-25 relative bg-gray-950 border-t border-gray-800 overflow-hidden">
       <div className="relative z-30">
-        <div className="mx-auto px-6 md:px-24 py-16 md:py-20">
+        <div className="mx-auto px-12 lg:px-36 py-16 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
             <div className="lg:col-span-4 space-y-6 mr-12">
-              <Logotype className="w-auto h-5 fill-white" />
+              <Logotype className="w-auto h-4 fill-white" />
               <p className="text-gray-400 text-md leading-relaxed max-w-md">
                 Open-source AI-powered research platform designed for
                 researchers, students, and knowledge workers.
               </p>
               <div className="flex space-x-5">
                 {socialLinks.map((social) => (
-                  <a
+                  <Link
                     key={social.name}
-                    href={social.href}
+                    to={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-500 hover:text-blue-400 transition-colors duration-300"
                   >
                     <span className="sr-only">{social.name}</span>
                     <svg
-                      className="w-5 h-5"
+                      className="size-5"
                       viewBox="0 0 24 24"
                       fill="currentColor"
                     >
                       {social.icon}
                     </svg>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -76,16 +82,12 @@ export default function Footer() {
                     <ul className="space-y-3">
                       {section.links.map((link) => (
                         <li key={link.name}>
-                          <a
-                            href={link.href}
-                            target={link.external ? "_blank" : undefined}
-                            rel={
-                              link.external ? "noopener noreferrer" : undefined
-                            }
+                          <Link
+                            to={link.to}
                             className="text-gray-400 hover:text-white transition-colors duration-300 text-sm"
                           >
                             {link.name}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -106,7 +108,7 @@ export default function Footer() {
         <img
           src="/Icon.svg"
           alt="Escruta"
-          className="hidden lg:block absolute top-16 right-20 size-40 opacity-20 grayscale select-none pointer-events-none"
+          className="hidden lg:block absolute top-16 right-28 w-40 h-40 opacity-20 grayscale select-none pointer-events-none"
         />
       </div>
     </footer>

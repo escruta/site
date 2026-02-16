@@ -1,5 +1,4 @@
 import {
-  isRouteErrorResponse,
   Link,
   Links,
   Meta,
@@ -13,6 +12,7 @@ import "./app.css";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Button } from "./components/ui";
 
 export const links: Route.LinksFunction = () => [
   {
@@ -60,7 +60,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#121212" />
+        <meta name="theme-color" content="#0a0a0a" />
         <meta name="application-name" content="Escruta" />
         <meta name="format-detection" content="telephone=no" />
         <Meta />
@@ -69,7 +69,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <script type="application/ld+json">{jsonLd}</script>
       </head>
       <body>
-        <div className="min-h-screen text-white bg-gray-900 overflow-x-hidden">
+        <div className="min-h-screen bg-gray-950 text-white overflow-x-hidden">
           <div className="md:min-h-[calc(100vh-80px)] w-full">
             <Navbar />
             <main className="w-full">{children}</main>
@@ -88,37 +88,26 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let title = "Error";
   let message = "An unexpected error occurred.";
-  const is404 = isRouteErrorResponse(error) && error.status === 404;
 
-  if (is404) {
-    title = "404 Not Found";
-    message = "The page you are looking for does not exist.";
-  } else if (import.meta.env.DEV && error instanceof Error) {
+  if (import.meta.env.DEV && error instanceof Error) {
     message = error.message;
   }
 
   return (
-    <main className="flex flex-col items-center justify-center h-screen bg-gray-900 text-gray-200">
-      <h1 className="text-4xl font-bold mb-2">{title}</h1>
-      <p className="text-lg mb-4">{message}</p>
+    <main className="flex flex-col gap-4 items-center justify-center h-screen bg-gray-950 text-white">
+      <h1 className="text-4xl font-bold">An error occurred</h1>
+      <p className="text-lg text-gray-400">{message}</p>
 
-      {is404 ? (
-        <Link
-          to="/"
-          className="bg-blue-500 text-white px-4 py-2 rounded-xs hover:bg-blue-600 transition duration-300 select-none"
-        >
-          Go back to the application
-        </Link>
-      ) : (
-        error instanceof Error &&
-        import.meta.env.DEV && (
-          <pre className="w-full max-w-2xl p-4 overflow-x-auto bg-gray-800 rounded">
-            <code>{error.stack}</code>
-          </pre>
-        )
+      {error instanceof Error && import.meta.env.DEV && (
+        <pre className="w-full max-w-2xl p-4 overflow-x-auto bg-gray-900 rounded-xs text-gray-400">
+          <code>{error.stack}</code>
+        </pre>
       )}
+
+      <Link to="/">
+        <Button variant="secondary">Return to Homepage</Button>
+      </Link>
     </main>
   );
 }

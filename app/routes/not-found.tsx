@@ -2,6 +2,7 @@ import type { Route } from "./+types/not-found";
 import { Button } from "../components/ui";
 import SimpleBackground from "../components/backgrounds/SimpleBackground";
 import { motion } from "motion/react";
+import { Link } from "react-router";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -24,9 +25,8 @@ export default function NotFound() {
   } as const;
 
   return (
-    <main className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gray-900 px-6 text-center">
+    <main className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gray-950 px-6 text-center">
       <SimpleBackground />
-      <div className="absolute top-0 left-0 w-full h-full bg-gray-900/65" />
 
       <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto space-y-6">
         <motion.div
@@ -61,9 +61,9 @@ export default function NotFound() {
           transition={{ ...fadeInSlight.transition, delay: 0.2 }}
           className="pt-2"
         >
-          <Button href="/" variant="secondary" size="md">
-            Return to Homepage
-          </Button>
+          <Link to="/">
+            <Button variant="secondary">Return to Homepage</Button>
+          </Link>
         </motion.div>
       </div>
     </main>

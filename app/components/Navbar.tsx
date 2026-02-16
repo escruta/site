@@ -1,27 +1,19 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Logotype from "./Logotype";
-import { repoUrl, appUrl } from "../config";
+import { appUrl } from "../config";
 import { Button } from "./ui";
+import { Link } from "react-router";
 
-interface NavbarOption {
+interface NavbarLink {
   name: string;
-  href: string;
-  icon?: string;
+  to: string;
 }
 
-const navbarOptions: NavbarOption[] = [
-  // {
-  //   name: "Docs",
-  //   href: "/docs",
-  //   icon: "...",
-  // },
-];
+const navbarLinks: NavbarLink[] = [];
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -35,66 +27,43 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="px-16 py-4 bg-gray-900/85 border-b border-blue-700 rounded-xs flex items-center justify-between backdrop-blur-lg transition-all duration-300 ease-out w-full fixed z-50">
+      <nav className="px-12 lg:px-36 py-6 max-h-20 bg-gray-950/85 border-b border-gray-800 rounded-xs flex items-center justify-between backdrop-blur-lg transition-all duration-200 w-full fixed z-50">
         <div className="flex items-center gap-6">
-          <a href="/" className="flex items-center group">
-            <Logotype className="w-auto h-8 py-2 fill-white transition-all duration-300 group-hover:fill-blue-400" />
-          </a>
-          <div className="hidden lg:flex gap-2">
-            {navbarOptions.map((option) => (
-              <Button
-                key={option.name}
-                href={option.href}
-                variant="secondary"
-                size="sm"
-                className="group relative"
-              >
-                {option.name}
-              </Button>
-            ))}
-          </div>
+          <Link to="/" className="flex items-center group">
+            <Logotype className="w-auto h-4" />
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
           <div className="hidden lg:flex gap-2 items-center">
-            <Button
-              href={repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="secondary"
-              size="sm"
-              className="group relative gap-2"
-            >
-              <svg
-                className="size-3 shrink-0"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26ZM12.0006 15.968L16.2473 18.3451L15.2988 13.5717L18.8719 10.2674L14.039 9.69434L12.0006 5.27502L9.96214 9.69434L5.12921 10.2674L8.70231 13.5717L7.75383 18.3451L12.0006 15.968Z" />
-              </svg>
-              Star on GitHub
-            </Button>
+            <div className="flex gap-2">
+              {navbarLinks.map((link) => (
+                <Link key={link.name} to={link.to}>
+                  <Button variant="ghost">{link.name}</Button>
+                </Link>
+              ))}
+            </div>
 
-            <Button href={appUrl} variant="primary" size="sm">
-              Get started
-            </Button>
+            {navbarLinks.length > 0 && (
+              <div className="w-px h-8 bg-gray-800 mx-5" />
+            )}
+
+            <Link to={appUrl}>
+              <Button variant="primary">Get started</Button>
+            </Link>
           </div>
 
           <div className="lg:hidden relative">
             <Button
-              onClick={toggleMenu}
-              type="button"
-              variant="icon"
-              size="icon"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              variant="secondary"
               aria-label="Toggle menu"
             >
               <motion.svg
                 animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                className="w-5 h-5"
+                className="size-5"
                 fill="currentColor"
                 viewBox="0 0 24 24"
-                aria-hidden="true"
               >
                 {isMobileMenuOpen ? (
                   <path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z" />
@@ -110,60 +79,34 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.95, y: -10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-600 rounded-xs overflow-hidden shadow-lg z-50"
+                  className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-700 rounded-xs overflow-hidden shadow-lg shadow-black/20 z-50"
                 >
-                  <div className="py-1">
-                    {navbarOptions.map((option) => (
-                      <Button
-                        key={option.name}
-                        href={option.href}
+                  <div className="p-3">
+                    {navbarLinks.map((link) => (
+                      <Link
+                        key={link.name}
+                        to={link.to}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        variant="ghost"
-                        className="w-full justify-start rounded-none px-4 py-3 gap-3"
                       >
-                        {option.icon && (
-                          <svg
-                            className="size-4 shrink-0"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                          >
-                            {option.icon}
-                          </svg>
-                        )}
-                        {option.name}
-                      </Button>
+                        <Button variant="ghost" className="w-full">
+                          {link.name}
+                        </Button>
+                      </Link>
                     ))}
 
-                    <Button
-                      href={repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      variant="ghost"
-                      className="w-full justify-start rounded-none px-4 py-3 gap-3"
-                    >
-                      <svg
-                        className="size-4 shrink-0"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26ZM12.0006 15.968L16.2473 18.3451L15.2988 13.5717L18.8719 10.2674L14.039 9.69434L12.0006 5.27502L9.96214 9.69434L5.12921 10.2674L8.70231 13.5717L7.75383 18.3451L12.0006 15.968Z" />
-                      </svg>
-                      Star on GitHub
-                    </Button>
+                    {navbarLinks.length > 0 && (
+                      <div className="h-px my-3 bg-gray-800" />
+                    )}
 
-                    <div className="px-3 py-2">
+                    <Link to={appUrl}>
                       <Button
-                        href={appUrl}
                         onClick={() => setIsMobileMenuOpen(false)}
                         variant="primary"
                         className="w-full"
                       >
                         Get started
                       </Button>
-                    </div>
+                    </Link>
                   </div>
                 </motion.div>
               )}
@@ -179,7 +122,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+            className="fixed inset-0 bg-black/60 backdrop-blur-[1px] z-40 lg:hidden"
           />
         )}
       </AnimatePresence>

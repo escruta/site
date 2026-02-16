@@ -1,43 +1,35 @@
 import { motion } from "motion/react";
 import appDesktopImage from "../assets/AppDesktop.webp";
-import { repoUrl, appUrl } from "../config";
-import { Button } from "./ui";
 import GradientAnimationBackground from "./backgrounds/GradientAnimationBackground";
-import SimpleBackground from "./backgrounds/SimpleBackground";
 import InteractiveCard from "./InteractiveCard";
+import SimpleBackground from "./backgrounds/SimpleBackground";
 
 export default function HeroSection() {
   const fadeInUpScale = {
-    initial: { opacity: 0, y: 40, scale: 0.98 },
-    animate: { opacity: 1, y: 0, scale: 1 },
-    transition: { duration: 0.8, ease: "easeOut" },
+    initial: { opacity: 0, y: 30 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
   } as const;
 
   const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, ease: "easeOut" },
-  } as const;
-
-  const fadeInScale = {
-    initial: { opacity: 0, scale: 0.95 },
-    animate: { opacity: 1, scale: 1 },
-    transition: { duration: 0.8, ease: "easeOut" },
+    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
   } as const;
 
   return (
-    <section className="relative flex pb-6 md:pb-0 w-full min-h-screen overflow-hidden bg-gray-900 px-6">
-      <SimpleBackground />
+    <section className="relative flex pb-6 md:pb-0 w-full min-h-screen overflow-hidden bg-gray-950">
       <GradientAnimationBackground />
-      <div className="absolute top-0 left-0 w-full h-full bg-gray-900/65" />
+      <SimpleBackground />
+      <div className="absolute size-full bg-linear-to-b from-transparent to-gray-950" />
 
-      <div className="w-full flex flex-col items-center mt-40 space-y-6 z-10">
+      <div className="w-full mt-40 flex flex-col gap-6 z-10 px-12 lg:px-36 mb-24">
         <motion.div
           initial={fadeInUpScale.initial}
           animate={fadeInUpScale.animate}
           transition={fadeInUpScale.transition}
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-xs text-sm font-semibold bg-blue-900 text-blue-200 border border-blue-700 select-none">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-xs text-sm font-semibold bg-blue-950 text-blue-300 border border-blue-800 select-none">
             <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M10.9999 12L3.92886 19.0711L2.51465 17.6569L8.1715 12L2.51465 6.34317L3.92886 4.92896L10.9999 12ZM10.9999 19H20.9999V21H10.9999V19Z" />
             </svg>
@@ -50,93 +42,41 @@ export default function HeroSection() {
           animate={fadeInUpScale.animate}
           transition={{ ...fadeInUpScale.transition, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-white text-center leading-12 sm:leading-16">
-            Think, ask, <span className="hero-learn-text">learn</span>
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-12 sm:leading-16">
+            Think, ask, <span className="text-blue-400">learn</span>
           </h1>
         </motion.div>
 
         <motion.div
-          className="relative"
           initial={fadeInUp.initial}
           animate={fadeInUp.animate}
           transition={{ ...fadeInUp.transition, delay: 0.4 }}
         >
-          <p className="max-w-2xl text-lg sm:text-xl text-gray-200 text-center font-semibold tracking-normal leading-8">
+          <p className="max-w-4xl text-lg sm:text-xl text-gray-300 font-semibold tracking-normal leading-8 -mt-2">
             Organize, analyze, and learn from your own knowledge. Ask questions,
             take notes, and gain valuable insights.{" "}
-            <span className="font-bold">All in one platform.</span>
+            <span className="font-bold text-white">All in one platform.</span>
           </p>
         </motion.div>
 
         <motion.div
-          className="w-full md:w-auto flex flex-col md:flex-row justify-center gap-4"
-          initial={fadeInUp.initial}
-          animate={fadeInUp.animate}
-          transition={{ ...fadeInUp.transition, delay: 0.6 }}
-        >
-          <motion.div
-            className="w-full md:w-auto"
-            initial={fadeInScale.initial}
-            animate={fadeInScale.animate}
-            transition={{ ...fadeInScale.transition, delay: 0.8 }}
-          >
-            <Button
-              href={appUrl}
-              variant="primary"
-              size="lg"
-              className="group relative overflow-hidden w-full md:w-auto"
-            >
-              Start exploring
-            </Button>
-          </motion.div>
-          <motion.div
-            className="w-full md:w-auto"
-            initial={fadeInScale.initial}
-            animate={fadeInScale.animate}
-            transition={{ ...fadeInScale.transition, delay: 1.0 }}
-          >
-            <Button
-              href={repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="secondary"
-              size="lg"
-              className="group relative overflow-hidden w-full md:w-auto"
-            >
-              Source code
-            </Button>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="w-4/5 my-12 hidden md:block"
+          className="hidden md:block my-4"
           initial={fadeInUpScale.initial}
           animate={fadeInUpScale.animate}
-          transition={{ ...fadeInUpScale.transition, delay: 1.2 }}
+          transition={{ ...fadeInUpScale.transition, delay: 0.65 }}
         >
           <InteractiveCard className="p-4 mx-4 md:mx-0">
             <div className="relative overflow-hidden rounded-xs">
               <img
                 src={appDesktopImage}
                 alt="Escruta Desktop Interface"
-                className="w-full h-auto select-none border border-gray-700/60"
+                className="w-full h-auto select-none border border-gray-700"
                 loading="lazy"
               />
             </div>
           </InteractiveCard>
         </motion.div>
       </div>
-
-      <style>{`
-        .hero-learn-text {
-          color: var(--color-blue-300);
-          text-shadow:
-            0 1px 0 var(--color-blue-500),
-            0 2px 2px rgba(3, 136, 252, 0.15),
-            0 0 20px rgba(75, 171, 253, 0.2),
-            0 0 2px rgba(255, 255, 255, 0.1);
-        }
-      `}</style>
     </section>
   );
 }

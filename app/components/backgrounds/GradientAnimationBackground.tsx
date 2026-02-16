@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 export default function GradientAnimationBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden w-full h-full select-none pointer-events-none">
-      <div className="absolute inset-0 w-full h-full opacity-100 transition-opacity duration-500">
+      <div className="absolute inset-0 w-full h-full opacity-35 transition-opacity duration-500">
         {/* Main shifting gradient */}
         <motion.div
           className="absolute inset-0 w-full h-full bg-linear-to-br from-gray-950 via-gray-900 to-blue-950"

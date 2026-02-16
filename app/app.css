@@ -13,8 +13,7 @@ body {
 }
 
 *::selection {
-  background-color: var(--color-blue-500);
-  color: var(--color-white);
+  background-color: color-mix(in oklab, var(--color-blue-500) 26%, transparent);
 }
 
 @theme {

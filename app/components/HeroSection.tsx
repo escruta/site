@@ -23,7 +23,7 @@ export default function HeroSection() {
       <SimpleBackground />
       <div className="absolute size-full bg-linear-to-b from-transparent to-gray-950" />
 
-      <div className="w-full md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] xl:w-[calc(100%-24rem)] mx-auto pt-40 pb-24 flex flex-col gap-6 z-10">
+      <div className="w-full md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] xl:w-[calc(100%-24rem)] mx-auto pt-40 lg:pb-24 flex flex-col gap-6 z-10">
         <motion.div
           initial={fadeInUpScale.initial}
           animate={fadeInUpScale.animate}
@@ -57,7 +57,7 @@ export default function HeroSection() {
         >
           <p className="max-w-4xl text-lg sm:text-xl text-gray-300 font-semibold tracking-normal leading-8 -mt-2">
             Organize, analyze, and learn from your own knowledge. Ask questions,
-            take notes, and gain valuable insights.{" "}
+            connect ideas, and gain valuable insights.{" "}
             <span className="font-bold text-white">All in one platform.</span>
           </p>
         </motion.div>
@@ -68,7 +68,7 @@ export default function HeroSection() {
           animate={fadeInUpScale.animate}
           transition={{ ...fadeInUpScale.transition, delay: 0.65 }}
         >
-          <InteractiveCard className="p-4 mx-4 md:mx-0">
+          <InteractiveCard className="p-2 sm:p-4 mx-4 md:mx-0">
             <div className="relative overflow-hidden rounded-xs">
               <img
                 src={appDesktopImage}

@@ -1,14 +1,16 @@
 import HeroSection from "~/components/HeroSection";
+import AboutSection from "~/components/AboutSection";
+import FeatureSection from "~/components/FeatureSection";
 import type { Route } from "./+types/home";
 
 export function meta(_: Route.MetaArgs) {
   const title = "Escruta - Think, ask, learn";
   const description =
-    "Organize, analyze, and learn from your own knowledge. Ask questions, take notes, and get insights—all in a open-source platform.";
+    "Organize, analyze, and learn from your own knowledge. Ask questions, connect ideas, and get insights—all in a open-source platform.";
   const url = "https://escruta.com";
   const image = "https://escruta.com/OpenGraphImage.webp";
   const keywords =
-    "knowledge management, AI research, note taking, open source, study tools, academic research, knowledge base, documentation, learning platform";
+    "knowledge management, AI research, structured thinking, open source, study tools, academic research, knowledge base, documentation, learning platform";
 
   return [
     { title },
@@ -53,5 +55,11 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <HeroSection />;
+  return (
+    <>
+      <HeroSection />
+      <AboutSection />
+      <FeatureSection />
+    </>
+  );
 }

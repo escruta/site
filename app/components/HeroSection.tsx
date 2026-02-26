@@ -18,19 +18,19 @@ export default function HeroSection() {
   } as const;
 
   return (
-    <section className="relative flex pb-6 md:pb-0 w-full min-h-screen overflow-hidden bg-gray-950">
+    <section className="relative flex min-h-screen w-full overflow-hidden bg-gray-950 pb-6 md:pb-0">
       <GradientAnimationBackground />
       <SimpleBackground />
       <div className="absolute size-full bg-linear-to-b from-transparent to-gray-950" />
 
-      <div className="w-full md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] xl:w-[calc(100%-24rem)] mx-auto pt-40 lg:pb-24 flex flex-col gap-6 z-10">
+      <div className="z-10 mx-auto flex w-full flex-col gap-6 pt-40 md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] lg:pb-24 xl:w-[calc(100%-24rem)]">
         <motion.div
           initial={fadeInUpScale.initial}
           animate={fadeInUpScale.animate}
           transition={fadeInUpScale.transition}
           className="px-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-xs text-sm font-semibold bg-blue-950 text-blue-300 border border-blue-800 select-none">
+          <span className="inline-flex items-center gap-2 rounded-xs border border-blue-800 bg-blue-950 px-3 py-1 text-sm font-semibold text-blue-300 select-none">
             <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M10.9999 12L3.92886 19.0711L2.51465 17.6569L8.1715 12L2.51465 6.34317L3.92886 4.92896L10.9999 12ZM10.9999 19H20.9999V21H10.9999V19Z" />
             </svg>
@@ -44,7 +44,7 @@ export default function HeroSection() {
           transition={{ ...fadeInUpScale.transition, delay: 0.2 }}
           className="px-8"
         >
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-12 sm:leading-16">
+          <h1 className="text-5xl leading-12 font-extrabold tracking-tight text-white sm:leading-16 md:text-6xl">
             Think, ask, <span className="text-blue-400">learn</span>
           </h1>
         </motion.div>
@@ -55,9 +55,9 @@ export default function HeroSection() {
           transition={{ ...fadeInUp.transition, delay: 0.4 }}
           className="px-8"
         >
-          <p className="max-w-4xl text-lg sm:text-xl text-gray-300 font-semibold tracking-normal leading-8 -mt-2">
-            Organize, analyze, and learn from your own knowledge. Ask questions,
-            connect ideas, and gain valuable insights.{" "}
+          <p className="-mt-2 max-w-4xl text-lg leading-8 font-semibold tracking-normal text-gray-300 sm:text-xl">
+            Organize, analyze, and learn from your own knowledge. Ask questions, connect ideas, and
+            gain valuable insights.{" "}
             <span className="font-bold text-white">All in one platform.</span>
           </p>
         </motion.div>
@@ -68,12 +68,12 @@ export default function HeroSection() {
           animate={fadeInUpScale.animate}
           transition={{ ...fadeInUpScale.transition, delay: 0.65 }}
         >
-          <InteractiveCard className="p-2 sm:p-4 mx-4 md:mx-0">
+          <InteractiveCard className="mx-4 p-2 sm:p-4 md:mx-0">
             <div className="relative overflow-hidden rounded-xs">
               <img
                 src={appDesktopImage}
                 alt="Escruta Desktop Interface"
-                className="w-full h-auto select-none border border-gray-700"
+                className="h-auto w-full border border-gray-700 select-none"
                 loading="lazy"
               />
             </div>

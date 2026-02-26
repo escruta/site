@@ -7,11 +7,7 @@ interface InteractiveCardProps {
   style?: React.CSSProperties;
 }
 
-export default function InteractiveCard({
-  children,
-  className,
-  style,
-}: InteractiveCardProps) {
+export default function InteractiveCard({ children, className, style }: InteractiveCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -73,7 +69,7 @@ export default function InteractiveCard({
   return (
     <motion.div
       ref={cardRef}
-      className={`interactive-card group relative rounded-xs bg-gray-900/50 border border-gray-800 transition-all duration-300 cursor-pointer overflow-hidden ${className || ""}`}
+      className={`interactive-card group relative cursor-pointer overflow-hidden rounded-xs border border-gray-800 bg-gray-900/50 transition-all duration-300 ${className || ""}`}
       style={style}
       onMouseDown={() => setIsPressed(true)}
       onMouseUp={() => setIsPressed(false)}
@@ -106,8 +102,7 @@ export default function InteractiveCard({
           background: borderGlowBackground,
           opacity: isHovered ? 1 : 0,
           padding: "1px",
-          WebkitMaskImage:
-            "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
+          WebkitMaskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
           WebkitMaskClip: "content-box, border-box",
           WebkitMaskComposite: "xor",
           maskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
@@ -121,11 +116,9 @@ export default function InteractiveCard({
         className="pointer-events-none absolute inset-0 rounded-xs transition-opacity duration-200"
         style={{
           opacity: isPressed ? 1 : 0,
-          background:
-            "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(30, 64, 175, 0.6))",
+          background: "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(30, 64, 175, 0.6))",
           padding: "1px",
-          WebkitMaskImage:
-            "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
+          WebkitMaskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
           WebkitMaskClip: "content-box, border-box",
           WebkitMaskComposite: "xor",
           maskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
@@ -139,11 +132,9 @@ export default function InteractiveCard({
         className="pointer-events-none absolute inset-0 rounded-xs transition-opacity duration-150"
         style={{
           opacity: isTouch ? 1 : 0,
-          background:
-            "linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(30, 64, 175, 0.2))",
+          background: "linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(30, 64, 175, 0.2))",
           padding: "1px",
-          WebkitMaskImage:
-            "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
+          WebkitMaskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
           WebkitMaskClip: "content-box, border-box",
           WebkitMaskComposite: "xor",
           maskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",

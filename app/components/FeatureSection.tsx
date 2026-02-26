@@ -9,9 +9,7 @@ const features: string[] = [
 ];
 
 function FeatureCard({ text }: { text: string }) {
-  return (
-    <InteractiveCard className="px-8 py-4 shrink-0">{text}</InteractiveCard>
-  );
+  return <InteractiveCard className="shrink-0 px-8 py-4">{text}</InteractiveCard>;
 }
 
 export default function FeatureSection() {
@@ -41,10 +39,7 @@ export default function FeatureSection() {
 
   return (
     <section className="relative flex w-full overflow-hidden bg-gray-950 pb-16">
-      <div
-        ref={scrollRef}
-        className="flex gap-8 overflow-x-hidden whitespace-nowrap"
-      >
+      <div ref={scrollRef} className="flex gap-8 overflow-x-hidden whitespace-nowrap">
         {features.map((feature) => (
           <FeatureCard key={feature} text={feature} />
         ))}

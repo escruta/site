@@ -19,8 +19,7 @@ export function meta(_: Route.MetaArgs) {
     { name: "author", content: "Francisco Mesa" },
     {
       name: "robots",
-      content:
-        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     },
     { name: "googlebot", content: "index, follow" },
     { tagName: "link", rel: "canonical", href: url },

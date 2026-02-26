@@ -27,15 +27,15 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="px-12 lg:px-36 py-6 max-h-20 bg-gray-950/85 border-b border-gray-800 rounded-xs flex items-center justify-between backdrop-blur-lg transition-all duration-200 w-full fixed z-50">
+      <nav className="fixed z-50 flex max-h-20 w-full items-center justify-between rounded-xs border-b border-gray-800 bg-gray-950/85 px-12 py-6 backdrop-blur-lg transition-all duration-200 lg:px-36">
         <div className="flex items-center gap-6">
-          <Link to="/" className="flex items-center group">
-            <Logotype className="w-auto h-4" />
+          <Link to="/" className="group flex items-center">
+            <Logotype className="h-4 w-auto" />
           </Link>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="hidden lg:flex gap-2 items-center">
+          <div className="hidden items-center gap-2 lg:flex">
             <div className="flex gap-2">
               {navbarLinks.map((link) => (
                 <Link key={link.name} to={link.to}>
@@ -44,16 +44,14 @@ export default function Navbar() {
               ))}
             </div>
 
-            {navbarLinks.length > 0 && (
-              <div className="w-px h-8 bg-gray-800 mx-5" />
-            )}
+            {navbarLinks.length > 0 && <div className="mx-5 h-8 w-px bg-gray-800" />}
 
             <Link to={appUrl}>
               <Button variant="primary">Get started</Button>
             </Link>
           </div>
 
-          <div className="lg:hidden relative">
+          <div className="relative lg:hidden">
             <Button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               variant="secondary"
@@ -79,24 +77,18 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.95, y: -10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-700 rounded-xs overflow-hidden shadow-lg shadow-black/20 z-50"
+                  className="absolute top-full right-0 z-50 mt-2 w-56 overflow-hidden rounded-xs border border-gray-700 bg-gray-900 shadow-lg shadow-black/20"
                 >
                   <div className="p-3">
                     {navbarLinks.map((link) => (
-                      <Link
-                        key={link.name}
-                        to={link.to}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
+                      <Link key={link.name} to={link.to} onClick={() => setIsMobileMenuOpen(false)}>
                         <Button variant="ghost" className="w-full">
                           {link.name}
                         </Button>
                       </Link>
                     ))}
 
-                    {navbarLinks.length > 0 && (
-                      <div className="h-px my-3 bg-gray-800" />
-                    )}
+                    {navbarLinks.length > 0 && <div className="my-3 h-px bg-gray-800" />}
 
                     <Link to={appUrl}>
                       <Button
@@ -122,7 +114,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-black/60 backdrop-blur-[1px] z-40 lg:hidden"
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-[1px] lg:hidden"
           />
         )}
       </AnimatePresence>

@@ -24,9 +24,9 @@ The landing page will be available at [localhost:5173](http://localhost:5173/) b
 - `npm run dev` - Start development server
 - `npm run build` - Create production build
 - `npm run typecheck` - Run TypeScript and React Router for type checking
-- `npm run lint` - Run Biome for code quality checks
-- `npm run lint:fix` - Run Biome for code quality checks and fix issues
-- `npm run format` - Run Biome for code formatting
-- `npm run format:fix` - Run Biome for code formatting and fix issues
+- `npm run lint` - Run Oxlint for code quality checks
+- `npm run lint:fix` - Run Oxlint for code quality checks and fix issues
+- `npm run format` - Run Oxfmt for code formatting
+- `npm run format:fix` - Run Oxfmt for code formatting and fix issues
 - `npm run cf-typegen` - Generate Cloudflare types
 - `npm run deploy` - Build and deploy to Cloudflare

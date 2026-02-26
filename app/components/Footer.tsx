@@ -40,15 +40,15 @@ const socialLinks: SocialLink[] = [
 
 export default function Footer() {
   return (
-    <footer className="z-25 relative bg-gray-950 border-t border-gray-800 overflow-hidden">
+    <footer className="relative z-25 overflow-hidden border-t border-gray-800 bg-gray-950">
       <div className="relative z-30">
-        <div className="mx-auto px-12 lg:px-36 py-16 md:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
-            <div className="lg:col-span-4 space-y-6 mr-12">
-              <Logotype className="w-auto h-4 fill-white" />
-              <p className="text-gray-400 text-md leading-relaxed max-w-md">
-                Open-source AI-powered research platform designed for
-                researchers, students, and knowledge workers.
+        <div className="mx-auto px-12 py-16 md:py-20 lg:px-36">
+          <div className="mb-12 grid grid-cols-1 gap-12 lg:grid-cols-12">
+            <div className="mr-12 space-y-6 lg:col-span-4">
+              <Logotype className="h-4 w-auto fill-white" />
+              <p className="text-md max-w-md leading-relaxed text-gray-400">
+                Open-source AI-powered research platform designed for researchers, students, and
+                knowledge workers.
               </p>
               <div className="flex space-x-5">
                 {socialLinks.map((social) => (
@@ -57,14 +57,10 @@ export default function Footer() {
                     to={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-500 hover:text-blue-400 transition-colors duration-300"
+                    className="text-gray-500 transition-colors duration-300 hover:text-blue-400"
                   >
                     <span className="sr-only">{social.name}</span>
-                    <svg
-                      className="size-5"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
+                    <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
                       {social.icon}
                     </svg>
                   </Link>
@@ -73,10 +69,10 @@ export default function Footer() {
             </div>
 
             <div className="lg:col-span-8">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
                 {footerSections.map((section) => (
                   <div key={section.title}>
-                    <h3 className="text-white font-semibold text-sm uppercase tracking-wide mb-4">
+                    <h3 className="mb-4 text-sm font-semibold tracking-wide text-white uppercase">
                       {section.title}
                     </h3>
                     <ul className="space-y-3">
@@ -84,7 +80,7 @@ export default function Footer() {
                         <li key={link.name}>
                           <Link
                             to={link.to}
-                            className="text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+                            className="text-sm text-gray-400 transition-colors duration-300 hover:text-white"
                           >
                             {link.name}
                           </Link>
@@ -97,10 +93,9 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center space-y-4 md:space-y-0">
-            <div className="text-gray-500 text-sm text-center md:text-left">
-              Francisco Mesa &copy; {new Date().getFullYear()}. All rights
-              reserved.
+          <div className="flex flex-col items-center space-y-4 border-t border-gray-800 pt-8 md:flex-row md:space-y-0">
+            <div className="text-center text-sm text-gray-500 md:text-left">
+              Francisco Mesa &copy; {new Date().getFullYear()}. All rights reserved.
             </div>
           </div>
         </div>
@@ -108,7 +103,7 @@ export default function Footer() {
         <img
           src="/Icon.svg"
           alt="Escruta"
-          className="hidden lg:block absolute top-16 right-28 w-40 h-40 opacity-20 grayscale select-none pointer-events-none"
+          className="pointer-events-none absolute top-16 right-28 hidden h-40 w-40 opacity-20 grayscale select-none lg:block"
         />
       </div>
     </footer>

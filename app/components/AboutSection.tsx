@@ -66,7 +66,7 @@ export default function AboutSection() {
 
   return (
     <section className="relative flex w-full overflow-hidden bg-gray-950">
-      <div className="z-10 mx-auto flex w-full flex-col gap-4 pt-12 pb-12 sm:pb-16 md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] lg:pb-20 xl:w-[calc(100%-24rem)]">
+      <div className="z-10 mx-auto flex w-full flex-col gap-4 pt-24 pb-12 sm:pb-16 md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] lg:pt-40 lg:pb-20 xl:w-[calc(100%-24rem)]">
         <motion.div
           initial={fadeInUp.initial}
           whileInView={fadeInUp.animate}

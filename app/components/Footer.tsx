@@ -93,8 +93,8 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center space-y-4 border-t border-gray-800 pt-8 md:flex-row md:space-y-0">
-            <div className="text-center text-sm text-gray-500 md:text-left">
+          <div className="flex flex-col items-center space-y-4 pt-8 md:flex-row md:space-y-0">
+            <div className="text-center text-sm text-white opacity-30 md:text-left">
               Francisco Mesa &copy; {new Date().getFullYear()}. All rights reserved.
             </div>
           </div>

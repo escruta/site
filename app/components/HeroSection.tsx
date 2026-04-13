@@ -40,7 +40,7 @@ export default function HeroSection() {
           className="px-8"
         >
           <h1 className="text-5xl leading-12 font-bold tracking-tight text-white sm:leading-16 md:text-6xl">
-            The platform for <span className="text-gray-200">your knowledge</span>
+            The platform for <span className="text-blue-400">your knowledge</span>
           </h1>
         </motion.div>
 

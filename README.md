@@ -1,7 +1,5 @@
 # Escruta - Site
 
-_"Think, ask, learn"_
-
 The landing page and informational website for the Escruta platform.
 
 Built with React Router, TypeScript, Tailwind CSS, and Vite.
@@ -10,23 +8,16 @@ Built with React Router, TypeScript, Tailwind CSS, and Vite.
 
 ### Prerequisites
 
-- Node.js (version 20 or higher)
-
-### Installation
-
-1. `npm install` - Install dependencies
-2. `npm run dev` - Start the development server
-
-The landing page will be available at [localhost:5173](http://localhost:5173/) by default.
+- Node.js (version 20 or higher).
 
 ### Development Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Create production build
-- `npm run typecheck` - Run TypeScript and React Router for type checking
-- `npm run lint` - Run Oxlint for code quality checks
-- `npm run lint:fix` - Run Oxlint for code quality checks and fix issues
-- `npm run format` - Run Oxfmt for code formatting
-- `npm run format:fix` - Run Oxfmt for code formatting and fix issues
-- `npm run cf-typegen` - Generate Cloudflare types
-- `npm run deploy` - Build and deploy to Cloudflare
+- `npm install` - Install dependencies.
+- `npm run dev` - Start development server ([localhost:5173](http://localhost:5173/)).
+- `npm run build` - Create production build.
+- `npm run lint` - Run Oxlint for code quality checks and fix issues.
+- `npm run format` - Run Oxfmt for code formatting and fix issues.
+- `npm run typecheck` - Run TypeScript and React Router for type checking.
+- `npm run check` - Run lint, format, and typecheck.
+- `npm run cf-typegen` - Generate Cloudflare types.
+- `npm run deploy` - Build and deploy to Cloudflare.

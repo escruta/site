@@ -10,15 +10,16 @@ import { Button } from "./components/ui";
 export const links: Route.LinksFunction = () => [
   {
     rel: "icon",
-    href: "/LightIcon.svg",
-    media: "(prefers-color-scheme: light)",
-    id: "favicon-light",
+    href: "/favicon.ico",
+    sizes: "any",
   },
   {
-    rel: "icon",
-    href: "/DarkIcon.svg",
-    media: "(prefers-color-scheme: dark)",
-    id: "favicon-dark",
+    rel: "apple-touch-icon",
+    href: "/apple-touch-icon.png",
+  },
+  {
+    rel: "manifest",
+    href: "/manifest.json",
   },
 ];
 
@@ -58,7 +59,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="format-detection" content="telephone=no" />
         <Meta />
         <Links />
-        <script src="/scripts/favicon.js" />
         <script type="application/ld+json">{jsonLd}</script>
       </head>
       <body>

@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { repoUrl } from "../config";
 import Logotype from "./Logotype";
+import Logomark from "./Logomark";
 
 interface FooterLink {
   name: string;
@@ -100,11 +101,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <img
-          src="/Icon.svg"
-          alt="Escruta"
-          className="pointer-events-none absolute top-16 right-28 hidden h-40 w-40 opacity-20 grayscale select-none lg:block"
-        />
+        <Logomark className="absolute top-16 right-28 hidden h-40 w-40 opacity-20 grayscale select-none lg:block" />
       </div>
     </footer>
   );

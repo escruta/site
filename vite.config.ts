@@ -11,4 +11,7 @@ export default defineConfig({
     tsconfigPaths(),
     cloudflare({ viteEnvironment: { name: "ssr" } }),
   ],
+  server: {
+    port: 3000,
+  },
 });

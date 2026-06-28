@@ -8,10 +8,10 @@
     "start": "react-router-serve ./build/server/index.js",
     "lint": "oxlint --fix",
     "format": "oxfmt",
-    "typecheck": "react-router typegen && npm run cf-typegen && tsc --noEmit",
-    "check": "npm run lint && npm run format && npm run typecheck",
+    "typecheck": "react-router typegen && pnpm cf-typegen && tsc --noEmit",
+    "check": "pnpm lint && pnpm format && pnpm typecheck",
     "cf-typegen": "wrangler types",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
     "@react-router/node": "7.10.1",
@@ -36,5 +36,6 @@
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4",
     "wrangler": "^4.61.1"
-  }
+  },
+  "packageManager": "pnpm@11.9.0"
 }

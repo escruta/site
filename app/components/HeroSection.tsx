@@ -82,11 +82,6 @@ export default function HeroSection() {
               Get started
             </Button>
           </Link>
-          <a href="#about" aria-label="Learn more about Escruta">
-            <Button variant="secondary" size="lg">
-              Learn more
-            </Button>
-          </a>
         </motion.div>
       </div>
 

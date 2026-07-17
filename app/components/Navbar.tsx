@@ -31,7 +31,7 @@ export default function Navbar() {
       <nav
         className={cn(
           "fixed z-50 w-full border-b backdrop-blur-lg transition-all duration-200 px-6",
-          "border-gray-200 bg-white/85 dark:border-gray-800 dark:bg-black/85",
+          "border-gray-200 bg-white/85 dark:border-gray-800 dark:bg-gray-950/85",
         )}
       >
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between border-x border-gray-200 px-12 py-6 dark:border-gray-800">
@@ -169,7 +169,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-white/30 backdrop-blur-[1px] lg:hidden dark:bg-black/30"
+            className="fixed inset-0 z-40 bg-white/30 backdrop-blur-[1px] lg:hidden dark:bg-gray-950/30"
           />
         )}
       </AnimatePresence>

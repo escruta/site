@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import { repoUrl } from "../config";
 import Logotype from "./Logotype";
-import Logomark from "./Logomark";
 
 interface FooterLink {
   name: string;
@@ -41,9 +40,9 @@ const socialLinks: SocialLink[] = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-25 overflow-hidden border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+    <footer className="relative z-25 overflow-hidden border-t border-gray-200 bg-white px-6 dark:border-gray-800 dark:bg-gray-950">
       <div className="relative z-30">
-        <div className="mx-auto px-12 py-16 md:py-20 lg:px-36">
+        <div className="mx-auto w-full max-w-6xl border-x border-gray-200 px-12 py-16 md:py-20 dark:border-gray-800">
           <div className="mb-12 grid grid-cols-1 gap-12 lg:grid-cols-12">
             <div className="mr-12 space-y-6 lg:col-span-4">
               <Logotype className="h-4 w-auto text-gray-900 dark:text-gray-50" />
@@ -100,8 +99,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
-        <Logomark className="absolute top-16 right-28 hidden h-40 w-40 text-blue-500 opacity-15 grayscale select-none lg:block dark:text-blue-400 dark:opacity-20" />
       </div>
     </footer>
   );

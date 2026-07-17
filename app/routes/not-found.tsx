@@ -32,9 +32,9 @@ export default function NotFound() {
         "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
       )}
     >
-      <SimpleBackground />
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center space-y-6 border-x border-gray-200 px-12 pt-60 dark:border-gray-800">
+        <SimpleBackground />
 
-      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center space-y-6">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -64,7 +64,6 @@ export default function NotFound() {
           initial={fadeInSlight.initial}
           animate={fadeInSlight.animate}
           transition={{ ...fadeInSlight.transition, delay: 0.2 }}
-          className="pt-2"
         >
           <Link to="/">
             <Button variant="secondary">Return to Homepage</Button>

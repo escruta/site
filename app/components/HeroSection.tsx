@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
-import { GaussianBlurGradientBackground } from "./backgrounds/GaussianBlurGradientBackground";
 import { cn } from "@/lib/utils";
+import { GaussianBlurGradientBackground } from "./backgrounds/GaussianBlurGradientBackground";
+import { TechPatternBackground } from "./backgrounds/TechPatternBackground";
 
 export default function HeroSection() {
   const fadeInUpScale = {
@@ -18,18 +19,19 @@ export default function HeroSection() {
   return (
     <section
       className={cn(
-        "relative flex min-h-screen w-full overflow-hidden pb-6 md:pb-0",
+        "relative flex min-h-screen w-full overflow-hidden px-6",
         "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
       )}
     >
-      <GaussianBlurGradientBackground />
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 border-x border-gray-200 px-12 pt-40 dark:border-gray-800">
+        <GaussianBlurGradientBackground />
+        <TechPatternBackground />
 
-      <div className="z-10 mx-auto flex w-full flex-col gap-6 pt-40 md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] lg:pb-24 xl:w-[calc(100%-24rem)]">
         <motion.div
+          className="relative z-10"
           initial={fadeInUpScale.initial}
           animate={fadeInUpScale.animate}
           transition={fadeInUpScale.transition}
-          className="px-8"
         >
           <span className="inline-flex items-center gap-2 rounded-xs border border-blue-300 bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700 select-none dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
             <svg
@@ -44,10 +46,10 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.div
+          className="relative z-10"
           initial={fadeInUpScale.initial}
           animate={fadeInUpScale.animate}
           transition={{ ...fadeInUpScale.transition, delay: 0.2 }}
-          className="px-8"
         >
           <h1 className="text-5xl leading-12 font-bold tracking-tight text-gray-900 sm:leading-16 md:text-6xl dark:text-white">
             The platform for{" "}
@@ -56,10 +58,10 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.div
+          className="relative z-10"
           initial={fadeInUp.initial}
           animate={fadeInUp.animate}
           transition={{ ...fadeInUp.transition, delay: 0.4 }}
-          className="px-8"
         >
           <p className="-mt-2 max-w-4xl text-lg leading-8 font-semibold tracking-normal text-gray-600 sm:text-xl dark:text-gray-300">
             Organize, analyze, and learn from your own knowledge. Ask questions, connect ideas, and
@@ -68,15 +70,6 @@ export default function HeroSection() {
           </p>
         </motion.div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.6 }}
-        className="pointer-events-none absolute right-0 bottom-0 left-0 z-0 h-[39vh] select-none"
-      >
-        <div className="absolute inset-0 bg-linear-to-t from-blue-500/10 to-transparent blur-3xl dark:from-blue-600/5" />
-      </motion.div>
     </section>
   );
 }

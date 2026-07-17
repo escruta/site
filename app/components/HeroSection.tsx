@@ -1,8 +1,5 @@
-import { Link } from "react-router";
 import { motion } from "motion/react";
 import { GaussianBlurGradientBackground } from "./backgrounds/GaussianBlurGradientBackground";
-import { appUrl } from "../config";
-import { Button } from "./ui";
 import { cn } from "@/lib/utils";
 
 export default function HeroSection() {
@@ -69,19 +66,6 @@ export default function HeroSection() {
             gain valuable insights.{" "}
             <span className="font-bold text-gray-900 dark:text-white">All in one platform.</span>
           </p>
-        </motion.div>
-
-        <motion.div
-          initial={fadeInUp.initial}
-          animate={fadeInUp.animate}
-          transition={{ ...fadeInUp.transition, delay: 0.6 }}
-          className="flex flex-wrap items-center gap-3 px-8 pt-2"
-        >
-          <Link to={appUrl}>
-            <Button variant="primary" size="lg">
-              Get started
-            </Button>
-          </Link>
         </motion.div>
       </div>
 

@@ -23,7 +23,7 @@ export default function HeroSection() {
         "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
       )}
     >
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 border-x border-gray-200 px-12 pt-40 dark:border-gray-800">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 border-x border-gray-200 px-12 pt-40 dark:border-gray-800">
         <GaussianBlurGradientBackground />
         <TechPatternBackground />
 
@@ -51,7 +51,7 @@ export default function HeroSection() {
           animate={fadeInUpScale.animate}
           transition={{ ...fadeInUpScale.transition, delay: 0.2 }}
         >
-          <h1 className="text-5xl leading-12 font-bold tracking-tight text-gray-900 sm:leading-16 md:text-6xl dark:text-white">
+          <h1 className="text-center text-5xl leading-12 font-bold tracking-tight text-gray-900 md:text-7xl md:leading-18 dark:text-white">
             The platform for{" "}
             <span className="text-blue-500 dark:text-blue-400">your knowledge</span>
           </h1>
@@ -63,7 +63,7 @@ export default function HeroSection() {
           animate={fadeInUp.animate}
           transition={{ ...fadeInUp.transition, delay: 0.4 }}
         >
-          <p className="-mt-2 max-w-4xl text-lg leading-8 font-semibold tracking-normal text-gray-600 sm:text-xl dark:text-gray-300">
+          <p className="-mt-2 max-w-2xl text-center text-lg leading-8 font-semibold tracking-normal text-gray-600 sm:text-xl dark:text-gray-300">
             Organize, analyze, and learn from your own knowledge. Ask questions, connect ideas, and
             gain valuable insights.{" "}
             <span className="font-bold text-gray-900 dark:text-white">All in one platform.</span>

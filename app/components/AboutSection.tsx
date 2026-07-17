@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "motion/react";
+import { cn } from "@/lib/utils";
 
 interface TypewriterTextProps {
   text: string;
@@ -43,14 +44,14 @@ function TypewriterText({ text, className = "", delay = 0, speed = 30 }: Typewri
   }, [started, text, speed]);
 
   return (
-    <span ref={ref} className={`${className} inline-block`}>
+    <span ref={ref} className={cn(className, "inline-block")}>
       <span className="select-none" style={{ color: "transparent" }}>
         {text}
       </span>
       <span className="absolute top-0 left-0">
         {displayedText}
         {!finished && (
-          <span className="ml-1 inline-block h-[1em] w-0.75 animate-pulse bg-blue-400" />
+          <span className="ml-1 inline-block h-[1em] w-0.75 animate-pulse bg-blue-500 dark:bg-blue-400" />
         )}
       </span>
     </span>
@@ -65,7 +66,13 @@ export default function AboutSection() {
   } as const;
 
   return (
-    <section className="relative flex w-full overflow-hidden bg-gray-950">
+    <section
+      id="about"
+      className={cn(
+        "relative flex w-full overflow-hidden scroll-mt-20",
+        "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
+      )}
+    >
       <div className="z-10 mx-auto flex w-full flex-col gap-4 pt-24 pb-12 sm:pb-16 md:w-[calc(100%-8rem)] lg:w-[calc(100%-16rem)] lg:pt-40 lg:pb-20 xl:w-[calc(100%-24rem)]">
         <motion.div
           initial={fadeInUp.initial}
@@ -74,8 +81,12 @@ export default function AboutSection() {
           transition={fadeInUp.transition}
           className="px-8"
         >
-          <span className="inline-flex items-center gap-2 rounded-xs border border-blue-800 bg-blue-950 px-3 py-1 text-sm font-semibold text-blue-300 select-none">
-            <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
+          <span className="inline-flex items-center gap-2 rounded-xs border border-blue-300 bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700 select-none dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+            <svg
+              className="size-3.5 text-blue-500 dark:text-blue-400"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
               <path d="M12 6C12.8284 6 13.5 5.32843 13.5 4.5C13.5 3.67157 12.8284 3 12 3C11.1716 3 10.5 3.67157 10.5 4.5C10.5 5.32843 11.1716 6 12 6ZM9 10H11V18H9V20H15V18H13V8H9V10Z"></path>
             </svg>
             About
@@ -87,12 +98,14 @@ export default function AboutSection() {
           whileInView={fadeInUp.animate}
           viewport={{ once: true }}
           transition={fadeInUp.transition}
-          className="px-8 text-3xl leading-tight tracking-tight md:text-4xl lg:text-5xl"
+          className="px-8 text-3xl leading-tight tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white"
         >
-          <span className="font-bold text-white">Your personal intelligence layer. </span>
+          <span className="font-bold text-gray-900 dark:text-white">
+            Your personal intelligence layer.{" "}
+          </span>
           <TypewriterText
             text="Built for thinkers who want to organize ideas, ask questions, and learn from their own information."
-            className="relative font-semibold text-blue-400"
+            className="relative font-semibold text-blue-500 dark:text-blue-400"
             delay={400}
             speed={25}
           />

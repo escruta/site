@@ -3,6 +3,7 @@ import { Button } from "../components/ui";
 import SimpleBackground from "../components/backgrounds/SimpleBackground";
 import { motion } from "motion/react";
 import { Link } from "react-router";
+import { cn } from "@/lib/utils";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -25,7 +26,12 @@ export default function NotFound() {
   } as const;
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gray-950 px-6 text-center">
+    <main
+      className={cn(
+        "relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center",
+        "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
+      )}
+    >
       <SimpleBackground />
 
       <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center space-y-6">
@@ -35,7 +41,9 @@ export default function NotFound() {
           transition={{ duration: 0.5 }}
           className="space-y-2"
         >
-          <h1 className="text-6xl font-extrabold tracking-tight text-white md:text-7xl">404</h1>
+          <h1 className="text-6xl font-extrabold tracking-tight text-gray-900 md:text-7xl dark:text-white">
+            404
+          </h1>
         </motion.div>
 
         <motion.div
@@ -44,8 +52,10 @@ export default function NotFound() {
           transition={{ ...fadeInSlight.transition, delay: 0.1 }}
           className="space-y-4"
         >
-          <h2 className="text-2xl font-semibold text-gray-100 md:text-3xl">Lost in knowledge</h2>
-          <p className="mx-auto max-w-md text-lg leading-relaxed text-gray-400">
+          <h2 className="text-2xl font-semibold text-gray-900 md:text-3xl dark:text-gray-100">
+            Lost in knowledge
+          </h2>
+          <p className="mx-auto max-w-md text-lg leading-relaxed text-gray-600 dark:text-gray-400">
             The information you are looking for is currently unavailable or has found a new home.
           </p>
         </motion.div>

@@ -4,6 +4,7 @@ import Logotype from "./Logotype";
 import { appUrl } from "../config";
 import { Button } from "./ui";
 import { Link } from "react-router";
+import { cn } from "@/lib/utils";
 
 interface NavbarLink {
   name: string;
@@ -27,10 +28,15 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed z-50 flex max-h-20 w-full items-center justify-between rounded-xs border-b border-gray-800 bg-gray-950/85 px-12 py-6 backdrop-blur-lg transition-all duration-200 lg:px-36">
+      <nav
+        className={cn(
+          "fixed z-50 flex max-h-20 w-full items-center justify-between rounded-xs border-b px-12 py-6 backdrop-blur-lg transition-all duration-200 lg:px-36",
+          "border-gray-200 bg-white/85 dark:border-gray-800 dark:bg-black/85",
+        )}
+      >
         <div className="flex items-center gap-6">
           <Link to="/" className="group flex items-center">
-            <Logotype className="h-4 w-auto" />
+            <Logotype className="h-4 w-auto text-gray-900 transition-colors duration-300 group-hover:text-blue-500 dark:text-gray-50 dark:group-hover:text-blue-400" />
           </Link>
         </div>
 
@@ -44,7 +50,9 @@ export default function Navbar() {
               ))}
             </div>
 
-            {navbarLinks.length > 0 && <div className="mx-5 h-8 w-px bg-gray-800" />}
+            {navbarLinks.length > 0 && (
+              <div className="mx-5 h-8 w-px bg-gray-200 dark:bg-gray-800" />
+            )}
 
             <Link to={appUrl}>
               <Button variant="primary">Get started</Button>
@@ -55,7 +63,7 @@ export default function Navbar() {
             <Button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               variant="secondary"
-              aria-label="Toggle menu"
+              ariaLabel="Toggle menu"
             >
               <motion.svg
                 animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
@@ -77,7 +85,10 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.95, y: -10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className="absolute top-full right-0 z-50 mt-2 w-56 overflow-hidden rounded-xs border border-gray-700 bg-gray-900 shadow-lg shadow-black/20"
+                  className={cn(
+                    "absolute top-full right-0 z-50 mt-2 w-56 overflow-hidden rounded-xs border shadow-lg",
+                    "border-gray-200 bg-white shadow-black/10 dark:border-gray-700 dark:bg-gray-900 dark:shadow-black/30",
+                  )}
                 >
                   <div className="p-3">
                     {navbarLinks.map((link) => (
@@ -88,7 +99,9 @@ export default function Navbar() {
                       </Link>
                     ))}
 
-                    {navbarLinks.length > 0 && <div className="my-3 h-px bg-gray-800" />}
+                    {navbarLinks.length > 0 && (
+                      <div className="my-3 h-px bg-gray-200 dark:bg-gray-800" />
+                    )}
 
                     <Link to={appUrl}>
                       <Button
@@ -114,7 +127,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-[1px] lg:hidden"
+            className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[1px] lg:hidden dark:bg-black/60"
           />
         )}
       </AnimatePresence>

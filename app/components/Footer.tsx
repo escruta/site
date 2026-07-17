@@ -41,13 +41,13 @@ const socialLinks: SocialLink[] = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-25 overflow-hidden border-t border-gray-800 bg-gray-950">
+    <footer className="relative z-25 overflow-hidden border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
       <div className="relative z-30">
         <div className="mx-auto px-12 py-16 md:py-20 lg:px-36">
           <div className="mb-12 grid grid-cols-1 gap-12 lg:grid-cols-12">
             <div className="mr-12 space-y-6 lg:col-span-4">
-              <Logotype className="h-4 w-auto fill-white" />
-              <p className="text-md max-w-md leading-relaxed text-gray-400">
+              <Logotype className="h-4 w-auto text-gray-900 dark:text-gray-50" />
+              <p className="text-md max-w-md leading-relaxed text-gray-500 dark:text-gray-400">
                 Open-source AI-powered research platform designed for researchers, students, and
                 knowledge workers.
               </p>
@@ -58,10 +58,10 @@ export default function Footer() {
                     to={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-500 transition-colors duration-300 hover:text-blue-400"
+                    className="text-gray-500 transition-colors duration-300 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400"
                   >
                     <span className="sr-only">{social.name}</span>
-                    <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
+                    <svg className="size-5 text-current" viewBox="0 0 24 24" fill="currentColor">
                       {social.icon}
                     </svg>
                   </Link>
@@ -73,7 +73,7 @@ export default function Footer() {
               <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
                 {footerSections.map((section) => (
                   <div key={section.title}>
-                    <h3 className="mb-4 text-sm font-semibold tracking-wide text-white uppercase">
+                    <h3 className="mb-4 text-sm font-semibold tracking-wide text-gray-900 uppercase dark:text-white">
                       {section.title}
                     </h3>
                     <ul className="space-y-3">
@@ -81,7 +81,7 @@ export default function Footer() {
                         <li key={link.name}>
                           <Link
                             to={link.to}
-                            className="text-sm text-gray-400 transition-colors duration-300 hover:text-white"
+                            className="text-sm text-gray-500 transition-colors duration-300 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                           >
                             {link.name}
                           </Link>
@@ -95,13 +95,13 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col items-center space-y-4 pt-8 md:flex-row md:space-y-0">
-            <div className="text-center text-sm text-white opacity-30 md:text-left">
+            <div className="text-center text-sm text-gray-900 opacity-40 md:text-left dark:text-white">
               Francisco Mesa &copy; {new Date().getFullYear()}. All rights reserved.
             </div>
           </div>
         </div>
 
-        <Logomark className="absolute top-16 right-28 hidden h-40 w-40 opacity-20 grayscale select-none lg:block" />
+        <Logomark className="absolute top-16 right-28 hidden h-40 w-40 text-blue-500 opacity-15 grayscale select-none lg:block dark:text-blue-400 dark:opacity-20" />
       </div>
     </footer>
   );

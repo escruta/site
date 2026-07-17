@@ -13,12 +13,53 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-family: var(--font-sans);
-  background-color: var(--color-gray-950);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-gray-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--color-gray-950);
+    color: var(--color-white);
+  }
 }
 
 *::selection {
   background-color: color-mix(in oklab, var(--color-blue-500) 26%, transparent);
+  color: var(--color-blue-950);
+}
+
+@media (prefers-color-scheme: dark) {
+  *::selection {
+    background-color: color-mix(in oklab, var(--color-blue-600) 39%, transparent);
+    color: var(--color-white);
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-white) inset !important;
+  box-shadow: 0 0 0 1000px var(--color-white) inset !important;
+  -webkit-text-fill-color: var(--color-gray-900) !important;
+  color: var(--color-gray-900) !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: var(--color-gray-900) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-gray-900) inset !important;
+    box-shadow: 0 0 0 1000px var(--color-gray-900) inset !important;
+    -webkit-text-fill-color: var(--color-white) !important;
+    color: var(--color-white) !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: var(--color-white) !important;
+  }
 }
 
 @theme {
@@ -99,7 +140,14 @@ body {
 
 @supports (scrollbar-color: auto) {
   * {
-    scrollbar-color: var(--color-gray-500) transparent;
+    scrollbar-color: var(--color-gray-300) transparent;
     scrollbar-width: thin;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    * {
+      scrollbar-color: var(--color-gray-500) transparent;
+      scrollbar-width: thin;
+    }
   }
 }

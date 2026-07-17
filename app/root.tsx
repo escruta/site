@@ -54,7 +54,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#131313" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
         <meta name="application-name" content="Escruta" />
         <meta name="format-detection" content="telephone=no" />
         <Meta />
@@ -62,7 +63,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <script type="application/ld+json">{jsonLd}</script>
       </head>
       <body>
-        <div className="min-h-screen overflow-x-hidden bg-gray-950 text-white">
+        <div className="min-h-screen overflow-x-hidden bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
           <div className="w-full md:min-h-[calc(100vh-80px)]">
             <Navbar />
             <main className="w-full">{children}</main>
@@ -88,12 +89,12 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-4 bg-gray-950 text-white">
+    <main className="flex h-screen flex-col items-center justify-center gap-4 bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
       <h1 className="text-4xl font-bold">An error occurred</h1>
-      <p className="text-lg text-gray-400">{message}</p>
+      <p className="text-lg text-gray-500 dark:text-gray-400">{message}</p>
 
       {error instanceof Error && import.meta.env.DEV && (
-        <pre className="w-full max-w-2xl overflow-x-auto rounded-xs bg-gray-900 p-4 text-gray-400">
+        <pre className="w-full max-w-2xl overflow-x-auto rounded-xs bg-gray-50 p-4 text-gray-600 dark:bg-gray-900 dark:text-gray-400">
           <code>{error.stack}</code>
         </pre>
       )}

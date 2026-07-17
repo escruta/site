@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface InteractiveCardProps {
   children: React.ReactNode;
@@ -18,13 +19,13 @@ export default function InteractiveCard({ children, className, style }: Interact
   const glowBackground = useTransform(
     [mouseX, mouseY],
     ([x, y]) =>
-      `radial-gradient(300px circle at ${x}px ${y}px, rgba(59, 130, 246, 0.1), transparent 60%)`,
+      `radial-gradient(300px circle at ${x}px ${y}px, rgba(3, 136, 252, 0.1), transparent 60%)`,
   );
 
   const borderGlowBackground = useTransform(
     [mouseX, mouseY],
     ([x, y]) =>
-      `radial-gradient(300px circle at ${x}px ${y}px, rgba(59, 130, 246, 0.6), transparent 60%)`,
+      `radial-gradient(300px circle at ${x}px ${y}px, rgba(3, 136, 252, 0.6), transparent 60%)`,
   );
 
   useEffect(() => {
@@ -69,7 +70,11 @@ export default function InteractiveCard({ children, className, style }: Interact
   return (
     <motion.div
       ref={cardRef}
-      className={`interactive-card group relative cursor-pointer overflow-hidden rounded-xs border border-gray-800 bg-gray-900/50 transition-all duration-300 ${className || ""}`}
+      className={cn(
+        "interactive-card group relative cursor-pointer overflow-hidden rounded-xs border bg-white ring-1 ring-gray-500/5 transition-all duration-300",
+        "border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:ring-gray-500/10",
+        className,
+      )}
       style={style}
       onMouseDown={() => setIsPressed(true)}
       onMouseUp={() => setIsPressed(false)}
@@ -80,7 +85,7 @@ export default function InteractiveCard({ children, className, style }: Interact
       <style>{`
         @media (max-width: 767px) {
           .interactive-card:active {
-            outline: 2px solid rgb(59, 130, 246);
+            outline: 2px solid rgb(3, 136, 252);
             outline-offset: 2px;
           }
         }
@@ -116,7 +121,7 @@ export default function InteractiveCard({ children, className, style }: Interact
         className="pointer-events-none absolute inset-0 rounded-xs transition-opacity duration-200"
         style={{
           opacity: isPressed ? 1 : 0,
-          background: "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(30, 64, 175, 0.6))",
+          background: "linear-gradient(135deg, rgba(3, 136, 252, 0.8), rgba(2, 113, 211, 0.6))",
           padding: "1px",
           WebkitMaskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
           WebkitMaskClip: "content-box, border-box",
@@ -132,7 +137,7 @@ export default function InteractiveCard({ children, className, style }: Interact
         className="pointer-events-none absolute inset-0 rounded-xs transition-opacity duration-150"
         style={{
           opacity: isTouch ? 1 : 0,
-          background: "linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(30, 64, 175, 0.2))",
+          background: "linear-gradient(135deg, rgba(3, 136, 252, 0.3), rgba(2, 113, 211, 0.2))",
           padding: "1px",
           WebkitMaskImage: "linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)",
           WebkitMaskClip: "content-box, border-box",

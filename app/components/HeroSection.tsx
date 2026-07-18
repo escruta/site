@@ -41,7 +41,7 @@ export default function HeroSection() {
             >
               <path d="M10.9999 12L3.92886 19.0711L2.51465 17.6569L8.1715 12L2.51465 6.34317L3.92886 4.92896L10.9999 12ZM10.9999 19H20.9999V21H10.9999V19Z" />
             </svg>
-            Under development
+            In development
           </span>
         </motion.div>
 
@@ -52,8 +52,8 @@ export default function HeroSection() {
           transition={{ ...fadeInUpScale.transition, delay: 0.2 }}
         >
           <h1 className="text-center text-5xl leading-12 font-bold tracking-tight text-gray-900 md:text-7xl md:leading-18 dark:text-white">
-            The platform for{" "}
-            <span className="text-blue-500 dark:text-blue-400">your knowledge</span>
+            The place where{" "}
+            <span className="text-blue-500 dark:text-blue-400">your knowledge lives</span>
           </h1>
         </motion.div>
 
@@ -64,9 +64,11 @@ export default function HeroSection() {
           transition={{ ...fadeInUp.transition, delay: 0.4 }}
         >
           <p className="-mt-2 max-w-2xl text-center text-lg leading-8 font-semibold tracking-normal text-gray-600 sm:text-xl dark:text-gray-300">
-            Organize, analyze, and learn from your own knowledge. Ask questions, connect ideas, and
-            gain valuable insights.{" "}
-            <span className="font-bold text-gray-900 dark:text-white">All in one platform.</span>
+            Organize your notes and ideas in one place. Chat with your sources, generate summaries,
+            and let AI spot patterns you'd miss on your own.{" "}
+            <span className="font-bold text-gray-900 dark:text-white">
+              Learn smarter, not harder.
+            </span>
           </p>
         </motion.div>
       </div>

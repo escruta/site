@@ -3,8 +3,8 @@ import { createRequestHandler } from "react-router";
 declare module "react-router" {
   export interface AppLoadContext {
     cloudflare: {
-      env: Env;
-      ctx: ExecutionContext;
+      env: Record<string, unknown>;
+      ctx: unknown;
     };
   }
 }
@@ -15,9 +15,9 @@ const requestHandler = createRequestHandler(
 );
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request: Request, env: Record<string, unknown>, ctx: unknown) {
     return requestHandler(request, {
       cloudflare: { env, ctx },
     });
   },
-} satisfies ExportedHandler<Env>;
+};

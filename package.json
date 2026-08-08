@@ -8,9 +8,8 @@
     "start": "react-router-serve ./build/server/index.js",
     "lint": "oxlint --fix",
     "format": "oxfmt",
-    "typecheck": "react-router typegen && pnpm cf-typegen && tsc --noEmit",
+    "typecheck": "react-router typegen && tsc --noEmit",
     "check": "pnpm lint && pnpm format && pnpm typecheck",
-    "cf-typegen": "wrangler types",
     "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {

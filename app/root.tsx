@@ -6,6 +6,7 @@ import "./app.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Button } from "./components/ui";
+import { themeInitScript } from "./lib/theme";
 
 export const links: Route.LinksFunction = () => [
   {
@@ -50,7 +51,7 @@ const jsonLd = JSON.stringify({
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,6 +62,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
         <script type="application/ld+json">{jsonLd}</script>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
         <div className="min-h-screen overflow-x-hidden bg-white text-gray-900 dark:bg-gray-950 dark:text-white">

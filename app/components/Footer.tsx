@@ -1,6 +1,51 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { repoUrl } from "../config";
 import Logotype from "./Logotype";
+import { Dropdown } from "./ui";
+import {
+  applyThemeClass,
+  getStoredTheme,
+  getThemeLabel,
+  setStoredTheme,
+  themes,
+  type Theme,
+} from "@/lib/theme";
+
+function ThemeSelector() {
+  const [theme, setTheme] = useState<Theme>("system");
+
+  useEffect(() => {
+    setTheme(getStoredTheme());
+  }, []);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => {
+      if (theme === "system") applyThemeClass("system");
+    };
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, [theme]);
+
+  const handleSelect = (next: Theme) => {
+    setTheme(next);
+    setStoredTheme(next);
+  };
+
+  return (
+    <Dropdown<Theme>
+      label="Theme"
+      options={themes}
+      selectedOption={theme}
+      onSelect={handleSelect}
+      align="left"
+      up
+      size="sm"
+      renderOption={getThemeLabel}
+    />
+  );
+}
 
 interface FooterLink {
   name: string;
@@ -93,10 +138,11 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center space-y-4 pt-8 md:flex-row md:space-y-0">
+          <div className="flex flex-col items-center space-y-4 pt-8 md:flex-row md:items-center md:justify-between md:space-y-0">
             <div className="text-center text-sm text-gray-900 opacity-40 md:text-left dark:text-white">
               Francisco Mesa &copy; {new Date().getFullYear()}. All rights reserved.
             </div>
+            <ThemeSelector />
           </div>
         </div>
       </div>

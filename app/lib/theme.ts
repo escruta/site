@@ -19,7 +19,7 @@ export function getThemeLabel(theme: Theme) {
  * <html> element, avoiding a flash of the wrong theme (FOUC). It must run
  * synchronously in <head>, before the body renders.
  */
-export const themeInitScript = `(function(){try{var t=localStorage.getItem(${JSON.stringify(themeStorageKey)})||"system";var prefersDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var isDark=t==="dark"||(t==="system"&&prefersDark);var c=document.documentElement.classList;isDark?c.add("dark"):c.remove("dark");}catch(e){}})();`;
+export const themeInitScript = `(function(){function compute(){try{var t=localStorage.getItem(${JSON.stringify(themeStorageKey)})||"system";var p=window.matchMedia("(prefers-color-scheme: dark)").matches;return t==="dark"||(t==="system"&&p);}catch(e){return false;}}function apply(){try{var d=compute();var x=document.documentElement.classList;d?x.add("dark"):x.remove("dark");}catch(e){}}apply();var m=window.matchMedia("(prefers-color-scheme: dark)");var onChange=function(){apply();};if(m.addEventListener)m.addEventListener("change",onChange);else if(m.addListener)m.addListener(onChange);window.addEventListener("load",apply);var tries=0;var timer=setInterval(function(){apply();if(++tries>=50)clearInterval(timer);},100);})();`;
 
 export function applyThemeClass(theme: Theme) {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;

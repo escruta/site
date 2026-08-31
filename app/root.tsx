@@ -1,12 +1,12 @@
-import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration, redirect } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import { Button } from "./components/ui";
 import { themeInitScript } from "./lib/theme";
+import { AuthProvider } from "@account/providers/AuthProvider";
+import { DeviceLoginHandler } from "@account/auth/DeviceLoginHandler";
 
 export const links: Route.LinksFunction = () => [
   {
@@ -49,6 +49,18 @@ const jsonLd = JSON.stringify({
   ],
 });
 
+export async function loader({ request }: { request: Request }) {
+  const url = new URL(request.url);
+  const host = url.host.toLowerCase();
+  if (
+    (host === "account.escruta.com" || host.endsWith(".account.escruta.com")) &&
+    url.pathname === "/"
+  ) {
+    throw redirect(`/account${url.search}`);
+  }
+  return null;
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -65,12 +77,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
-        <div className="min-h-screen overflow-x-hidden bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
-          <div className="w-full md:min-h-[calc(100vh-80px)]">
-            <Navbar />
-            <main className="w-full">{children}</main>
-            <Footer />
-          </div>
+        <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
+          {children}
         </div>
         <ScrollRestoration />
         <Scripts />
@@ -80,7 +88,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <AuthProvider>
+      <DeviceLoginHandler />
+      <Outlet />
+    </AuthProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

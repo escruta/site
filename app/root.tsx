@@ -1,12 +1,10 @@
-import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration, redirect } from "react-router";
+import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 
 import { Button } from "./components/ui";
 import { themeInitScript } from "./lib/theme";
-import { AuthProvider } from "@account/providers/AuthProvider";
-import { DeviceLoginHandler } from "@account/auth/DeviceLoginHandler";
 
 export const links: Route.LinksFunction = () => [
   {
@@ -49,18 +47,6 @@ const jsonLd = JSON.stringify({
   ],
 });
 
-export async function loader({ request }: { request: Request }) {
-  const url = new URL(request.url);
-  const host = url.host.toLowerCase();
-  if (
-    (host === "account.escruta.com" || host.endsWith(".account.escruta.com")) &&
-    url.pathname === "/"
-  ) {
-    throw redirect(`/account${url.search}`);
-  }
-  return null;
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -88,12 +74,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <AuthProvider>
-      <DeviceLoginHandler />
-      <Outlet />
-    </AuthProvider>
-  );
+  return <Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

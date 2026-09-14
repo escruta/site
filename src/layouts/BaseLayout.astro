@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+import { themeInitScript } from "../lib/theme";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Escruta",
+  description: "Organize, analyze, and learn from your own knowledge.",
+  url: "https://escruta.com",
+  applicationCategory: "ProductivityApplication",
+  operatingSystem: "Web",
+  author: {
+    "@type": "Person",
+    name: "Francisco Mesa",
+    url: "https://francids.com",
+  },
+  featureList: [
+    "AI-powered knowledge management",
+    "Note taking and organization",
+    "Document analysis",
+    "Study guide generation",
+    "Flashcard creation",
+    "Mind mapping",
+    "Audio summaries",
+  ],
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
+    <meta name="application-name" content="Escruta" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <slot name="head" />
+    <script is:inline type="application/ld+json" set:html={jsonLd} />
+    <script is:inline set:html={themeInitScript} />
+  </head>
+  <body>
+    <div class="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
+      <slot />
+    </div>
+  </body>
+</html>

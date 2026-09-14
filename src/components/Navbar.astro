@@ -1,0 +1,148 @@
+---
+import Logotype from "./Logotype.astro";
+import Button from "./ui/Button.astro";
+import { repoUrl } from "../lib/config";
+import { cn } from "@/lib/utils";
+---
+
+<div data-navbar>
+  <nav
+    class={cn(
+      "fixed z-50 w-full border-b backdrop-blur-lg transition-all duration-200 px-6",
+      "border-gray-200 bg-white/85 dark:border-gray-800 dark:bg-gray-950/85",
+    )}
+  >
+    <div
+      class="mx-auto flex w-full max-w-6xl items-center justify-between border-x border-gray-200 px-12 py-6 dark:border-gray-800"
+    >
+      <div class="flex items-center gap-6">
+        <a href="/" class="group flex items-center">
+          <Logotype
+            class="h-4 w-auto text-gray-900 transition-colors duration-300 group-hover:text-blue-500 dark:text-gray-50 dark:group-hover:text-blue-400"
+          />
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <div class="hidden items-center gap-2 lg:flex">
+          <a href={repoUrl}>
+            <Button variant="secondary">
+              <svg slot="icon" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                <path
+                  d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"
+                />
+              </svg>
+              View source
+            </Button>
+          </a>
+        </div>
+
+        <div class="relative lg:hidden">
+          <Button
+            data-menu-button
+            variant="secondary"
+            ariaLabel="Toggle menu"
+            aria-expanded="false"
+          >
+            <svg
+              slot="icon"
+              data-menu-icon
+              class="size-5 transition-transform duration-200"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                data-icon-closed
+                d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"
+              />
+              <path
+                data-icon-open
+                class="hidden"
+                d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"
+              />
+            </svg>
+          </Button>
+
+          <div
+            data-menu
+            class={cn(
+              "absolute top-full right-0 z-50 mt-2 w-56 overflow-hidden rounded-xs border shadow-lg origin-top-right",
+              "transition-all duration-200 ease-out",
+              "opacity-0 scale-95 -translate-y-2 pointer-events-none",
+              "border-gray-200 bg-white shadow-black/10 dark:border-gray-700 dark:bg-gray-900 dark:shadow-black/30",
+            )}
+          >
+            <div class="p-3">
+              <a href={repoUrl}>
+                <Button
+                  variant="secondary"
+                  class="w-full"
+                >
+                  <svg slot="icon" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                    <path
+                      d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"
+                    />
+                  </svg>
+                  View source
+                </Button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div
+    data-overlay
+    class="fixed inset-0 z-40 hidden bg-white/30 backdrop-blur-[1px] lg:hidden dark:bg-gray-950/30"
+  ></div>
+</div>
+
+<script>
+  function initNavbar(root: HTMLElement) {
+    if (root.dataset.initialized) return;
+    root.dataset.initialized = "true";
+
+    const button = root.querySelector<HTMLButtonElement>("[data-menu-button]");
+    const menu = root.querySelector<HTMLElement>("[data-menu]");
+    const overlay = root.querySelector<HTMLElement>("[data-overlay]");
+    const icon = root.querySelector<SVGElement>("[data-menu-icon]");
+    const iconOpen = root.querySelector("[data-icon-open]");
+    const iconClosed = root.querySelector("[data-icon-closed]");
+    if (!button || !menu || !overlay || !icon) return;
+
+    let isOpen = false;
+
+    function setOpen(next: boolean) {
+      isOpen = next;
+      button!.setAttribute("aria-expanded", String(next));
+      menu!.classList.toggle("opacity-0", !next);
+      menu!.classList.toggle("scale-95", !next);
+      menu!.classList.toggle("-translate-y-2", !next);
+      menu!.classList.toggle("pointer-events-none", !next);
+      overlay!.classList.toggle("hidden", !next);
+      icon!.classList.toggle("rotate-90", next);
+      iconOpen?.classList.toggle("hidden", !next);
+      iconClosed?.classList.toggle("hidden", next);
+    }
+
+    button.addEventListener("click", () => setOpen(!isOpen));
+    overlay.addEventListener("click", () => setOpen(false));
+    menu.addEventListener("click", () => setOpen(false));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen) {
+        setOpen(false);
+        button.focus();
+      }
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-navbar]").forEach(initNavbar);
+  }
+
+  initAll();
+  document.addEventListener("astro:after-swap", initAll);
+</script>

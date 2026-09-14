@@ -1,8 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  "main": "@astrojs/cloudflare/entrypoints/server",
   "name": "escruta",
   "compatibility_date": "2025-04-04",
-  "main": "./workers/app.ts",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/client",
+    "not_found_handling": "404-page"
+  },
   "observability": {
     "enabled": true
   }

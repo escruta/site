@@ -2,12 +2,13 @@
 
 The landing page and informational website for the Escruta platform.
 
-Built with React Router, TypeScript, Tailwind CSS, and Vite.
+Built with Astro, TypeScript, and Tailwind CSS.
 
 ## Getting Started
 
 - `pnpm install` - Install dependencies.
-- `pnpm dev` - Start development server ([localhost:5173](http://localhost:5173/)).
+- `pnpm dev` - Start development server ([localhost:3000](http://localhost:3000/)).
 - `pnpm build` - Create production build.
+- `pnpm preview` - Preview the production build locally.
 - `pnpm check` - Run lint, format, and typecheck.
 - `pnpm deploy` - Build and deploy to Cloudflare.

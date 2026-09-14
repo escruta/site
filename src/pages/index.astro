@@ -1,0 +1,54 @@
+---
+import MarketingLayout from "../layouts/MarketingLayout.astro";
+import HeroSection from "../components/HeroSection.astro";
+
+const title = "Escruta - Think, ask, learn";
+const description =
+  "Organize, analyze, and learn from your own knowledge. Ask questions, connect ideas, and get insights—all in a open-source platform.";
+const url = "https://escruta.com";
+const image = "https://escruta.com/OpenGraphImage.webp";
+const keywords =
+  "knowledge management, AI research, structured thinking, open source, study tools, academic research, knowledge base, documentation, learning platform";
+---
+
+<MarketingLayout title={title} description={description}>
+  <Fragment slot="head">
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Francisco Mesa" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta name="googlebot" content="index, follow" />
+    <link rel="canonical" href={url} />
+
+    {/* OpenGraph */}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:site_name" content="Escruta" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
+    <meta
+      property="og:image:alt"
+      content="Escruta - AI-powered knowledge management platform"
+    />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta
+      name="twitter:image:alt"
+      content="Escruta - AI-powered knowledge management platform"
+    />
+    <meta name="twitter:creator" content="@franc_ids" />
+    <meta name="twitter:site" content="@franc_ids" />
+  </Fragment>
+
+  <HeroSection />
+</MarketingLayout>

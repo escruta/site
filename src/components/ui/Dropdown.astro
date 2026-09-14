@@ -1,0 +1,241 @@
+---
+import CheckIcon from "../icons/CheckIcon.astro";
+import ChevronIcon from "../icons/ChevronIcon.astro";
+import { cn } from "@/lib/utils";
+
+export interface DropdownOption {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  options: DropdownOption[];
+  selected?: string | null;
+  onSelectEvent?: string;
+  label?: string;
+  class?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  size?: "sm" | "md";
+  align?: "left" | "right";
+  up?: boolean;
+}
+
+const {
+  id,
+  options,
+  selected = null,
+  label,
+  class: className = "",
+  placeholder = "Choose an option",
+  disabled = false,
+  size = "md",
+  align = "left",
+  up = false,
+} = Astro.props;
+
+const selectedOption = options.find((o) => o.value === selected) ?? null;
+const closedOffset = up ? "-translate-y-1" : "translate-y-1";
+---
+
+<div class={cn("flex items-center gap-3", className)} data-dropdown={id} data-up={up ? "" : undefined}>
+  {
+    label && (
+      <p class="text-sm font-medium whitespace-nowrap text-gray-700 select-none dark:text-gray-200">
+        {label}
+      </p>
+    )
+  }
+
+  <div class="relative max-w-xs min-w-0 flex-1 sm:max-w-sm">
+    <button
+      type="button"
+      data-trigger
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      disabled={disabled}
+      class={cn(
+        "relative w-full text-left",
+        size === "sm" && "h-8 px-2 pr-7 text-xs",
+        size === "md" && "h-10 px-3 pr-10 text-sm",
+        "bg-white dark:bg-gray-900",
+        "border border-gray-300 dark:border-gray-600",
+        "rounded-xs",
+        "text-gray-900 dark:text-gray-100",
+        "focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900",
+        "transition-all duration-200 ease-in-out",
+        "select-none",
+        "aria-expanded:ring-2 aria-expanded:ring-blue-500 dark:aria-expanded:ring-blue-400 aria-expanded:border-blue-500 dark:aria-expanded:border-blue-400 aria-expanded:ring-offset-2 aria-expanded:ring-offset-white dark:aria-expanded:ring-offset-gray-900",
+        !disabled &&
+          "hover:border-blue-500 hover:ring-1 hover:ring-blue-300 hover:ring-offset-1 hover:ring-offset-white dark:hover:ring-offset-gray-900 dark:hover:border-blue-400 cursor-pointer",
+        disabled && "opacity-50 cursor-not-allowed bg-gray-50 dark:bg-gray-900 hover:ring-0",
+      )}
+    >
+      <span
+        data-trigger-label
+        class={cn("block truncate", !selectedOption && "text-gray-500 dark:text-gray-400 font-normal")}
+      >
+        {selectedOption ? selectedOption.label : placeholder}
+      </span>
+      <span
+        class={cn(
+          "absolute inset-y-0 right-0 flex items-center pointer-events-none",
+          size === "sm" ? "pr-2" : "pr-3",
+        )}
+      >
+        <ChevronIcon
+          data-chevron
+          direction={!up ? "down" : "up"}
+          class={cn(
+            "text-gray-400 dark:text-gray-400 transition-transform duration-200",
+            size === "sm" ? "size-4" : "size-5",
+          )}
+        />
+      </span>
+    </button>
+
+    <div
+      data-menu
+      role="listbox"
+      class={cn(
+        "absolute z-40 w-max min-w-full max-w-xs sm:max-w-sm",
+        "bg-white dark:bg-gray-900",
+        "border border-gray-300 dark:border-gray-600",
+        "rounded-xs shadow-lg shadow-gray-500/10 dark:shadow-black/20 ring-1 ring-gray-500/5 dark:ring-gray-500/10",
+        "max-h-60 overflow-auto",
+        "transition-all duration-200 ease-out",
+        "invisible opacity-0",
+        closedOffset,
+        up ? "bottom-full mb-1.5" : "top-full mt-1.5",
+        align === "right" ? "right-0" : "left-0",
+      )}
+    >
+      <div class="flex flex-col gap-0.5 p-1.5">
+        {
+          options.map((option) => (
+            <button
+              type="button"
+              role="option"
+              aria-selected={option.value === selected}
+              data-option={option.value}
+              data-label={option.label}
+              class={cn(
+                "relative flex w-full items-center text-left font-medium",
+                size === "sm" ? "px-2 py-1.5 text-xs" : "px-3 py-2 text-sm",
+                "text-gray-700 dark:text-gray-200",
+                "transition-all duration-200 outline-none select-none cursor-pointer rounded-xs",
+                "hover:bg-blue-50 hover:ring-1 hover:ring-blue-300 focus:bg-blue-50 dark:hover:bg-gray-700 dark:focus:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 active:bg-blue-100 dark:active:bg-gray-600",
+                "focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900",
+                option.value === selected &&
+                  "bg-blue-100 dark:bg-gray-700 text-blue-700 dark:text-blue-300",
+              )}
+            >
+              <span class="flex-1 truncate pr-6">{option.label}</span>
+              <span
+                data-check
+                class={cn(
+                  "absolute inset-y-0 right-0 flex items-center text-blue-600 dark:text-blue-400",
+                  size === "sm" ? "pr-2" : "pr-3",
+                  option.value !== selected && "hidden",
+                )}
+              >
+                <CheckIcon class={size === "sm" ? "size-4" : "size-5"} />
+              </span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initDropdown(root: HTMLElement) {
+    if (root.dataset.initialized) return;
+    root.dataset.initialized = "true";
+
+    const up = root.hasAttribute("data-up");
+    const trigger = root.querySelector<HTMLButtonElement>("[data-trigger]");
+    const menu = root.querySelector<HTMLElement>("[data-menu]");
+    const triggerLabel = root.querySelector<HTMLElement>("[data-trigger-label]");
+    const chevron = root.querySelector<HTMLElement>("[data-chevron]");
+    const optionButtons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-option]"));
+    if (!trigger || !menu || !triggerLabel) return;
+
+    const closedOffset = up ? "-translate-y-1" : "translate-y-1";
+    let isOpen = false;
+
+    function setOpen(next: boolean) {
+      isOpen = next;
+      trigger!.setAttribute("aria-expanded", String(next));
+      menu!.classList.toggle("invisible", !next);
+      menu!.classList.toggle("opacity-0", !next);
+      menu!.classList.toggle(closedOffset, !next);
+      menu!.classList.toggle("translate-y-0", next);
+      // Chevron points away from the menu when closed, toward it when open.
+      chevron?.classList.remove("rotate-0", "rotate-180");
+      chevron?.classList.add(next !== up ? "rotate-180" : "rotate-0");
+    }
+
+    function select(value: string, label: string) {
+      triggerLabel!.textContent = label;
+      triggerLabel!.classList.remove("text-gray-500", "dark:text-gray-400", "font-normal");
+      for (const btn of optionButtons) {
+        const isSelected = btn.dataset.option === value;
+        btn.setAttribute("aria-selected", String(isSelected));
+        btn.classList.toggle("bg-blue-100", isSelected);
+        btn.classList.toggle("dark:bg-gray-700", isSelected);
+        btn.classList.toggle("text-blue-700", isSelected);
+        btn.classList.toggle("dark:text-blue-300", isSelected);
+        btn.querySelector("[data-check]")?.classList.toggle("hidden", !isSelected);
+      }
+      root.dispatchEvent(
+        new CustomEvent("dropdown-select", {
+          bubbles: true,
+          detail: { id: root.dataset.dropdown, value },
+        }),
+      );
+    }
+
+    trigger.addEventListener("click", () => {
+      if (trigger.disabled) return;
+      setOpen(!isOpen);
+    });
+
+    // Silent programmatic sync (e.g. restoring a stored value on page load).
+    // Unlike a user click it doesn't move focus or scroll the page.
+    (
+      root as HTMLElement & { setDropdownValue?: (value: string) => void }
+    ).setDropdownValue = (value: string) => {
+      const btn = optionButtons.find((b) => b.dataset.option === value);
+      if (btn) select(btn.dataset.option ?? "", btn.dataset.label ?? "");
+    };
+
+    for (const btn of optionButtons) {
+      btn.addEventListener("click", () => {
+        select(btn.dataset.option ?? "", btn.dataset.label ?? "");
+        setOpen(false);
+        trigger.focus();
+      });
+    }
+
+    document.addEventListener("mousedown", (event) => {
+      if (isOpen && !root.contains(event.target as Node)) setOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (isOpen && event.key === "Escape") {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-dropdown]").forEach(initDropdown);
+  }
+
+  initAll();
+  document.addEventListener("astro:after-swap", initAll);
+</script>

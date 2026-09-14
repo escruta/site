@@ -2,3 +2,7 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
+
+overrides:
+  workerd: 1.20260910.1
+  miniflare: 5.20260828.0-alpha

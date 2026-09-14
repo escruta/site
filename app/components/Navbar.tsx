@@ -6,13 +6,6 @@ import { Button } from "./ui";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils";
 
-interface NavbarLink {
-  name: string;
-  to: string;
-}
-
-const navbarLinks: NavbarLink[] = [];
-
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -43,29 +36,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 lg:flex">
-              <div className="flex gap-2">
-                {navbarLinks.map((link) => (
-                  <Link key={link.name} to={link.to}>
-                    <Button variant="ghost">{link.name}</Button>
-                  </Link>
-                ))}
-              </div>
-
-              {navbarLinks.length > 0 && (
-                <div className="mx-5 h-8 w-px bg-gray-200 dark:bg-gray-800" />
-              )}
-
               <Link to={repoUrl}>
-                {/* <Button
-                  variant="primary"
-                  icon={
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="size-4">
-                      <path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z" />
-                    </svg>
-                  }
-                >
-                  Download
-                </Button> */}
                 <Button
                   variant="secondary"
                   icon={
@@ -111,35 +82,7 @@ export default function Navbar() {
                     )}
                   >
                     <div className="p-3">
-                      {navbarLinks.map((link) => (
-                        <Link
-                          key={link.name}
-                          to={link.to}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <Button variant="ghost" className="w-full">
-                            {link.name}
-                          </Button>
-                        </Link>
-                      ))}
-
-                      {navbarLinks.length > 0 && (
-                        <div className="my-3 h-px bg-gray-200 dark:bg-gray-800" />
-                      )}
-
                       <Link to={repoUrl}>
-                        {/* <Button
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          variant="primary"
-                          className="w-full"
-                          icon={
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="size-4">
-                              <path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z" />
-                            </svg>
-                          }
-                        >
-                          Download
-                        </Button> */}
                         <Button
                           onClick={() => setIsMobileMenuOpen(false)}
                           variant="secondary"

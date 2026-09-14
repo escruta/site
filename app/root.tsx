@@ -35,7 +35,6 @@ const jsonLd = JSON.stringify({
     name: "Francisco Mesa",
     url: "https://francids.com",
   },
-  screenshot: "https://escruta.com/AppScreenshot.webp",
   featureList: [
     "AI-powered knowledge management",
     "Note taking and organization",

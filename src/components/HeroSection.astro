@@ -6,12 +6,12 @@ import TechPatternBackground from "./backgrounds/TechPatternBackground.astro";
 
 <section
   class={cn(
-    "relative flex min-h-screen w-full overflow-hidden px-6",
+    "relative flex min-h-screen w-full overflow-hidden px-0 md:px-6",
     "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
   )}
 >
   <div
-    class="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 border-x border-gray-200 px-12 pt-40 dark:border-gray-800"
+    class="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 border-x-0 border-gray-200 px-6 pt-40 md:border-x md:px-12 dark:border-gray-800"
   >
     <GaussianBlurGradientBackground />
     <TechPatternBackground />

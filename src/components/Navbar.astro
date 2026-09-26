@@ -25,12 +25,17 @@ import { cn } from "@/lib/utils";
 
       <div class="flex items-center gap-2">
         <div class="hidden items-center gap-2 lg:flex">
-          <a href={repoUrl}>
+          <a href={repoUrl} target="_blank" rel="noopener noreferrer">
             <Button variant="secondary">
-              <svg slot="icon" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+              <svg
+                slot="icon"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-4"
+              >
                 <path
                   d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"
-                />
+                ></path>
               </svg>
               View source
             </Button>
@@ -53,13 +58,12 @@ import { cn } from "@/lib/utils";
             >
               <path
                 data-icon-closed
-                d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"
-              />
+                d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
               <path
                 data-icon-open
                 class="hidden"
                 d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"
-              />
+              ></path>
             </svg>
           </Button>
 
@@ -74,14 +78,16 @@ import { cn } from "@/lib/utils";
           >
             <div class="p-3">
               <a href={repoUrl}>
-                <Button
-                  variant="secondary"
-                  class="w-full"
-                >
-                  <svg slot="icon" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                <Button variant="secondary" class="w-full">
+                  <svg
+                    slot="icon"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="size-4"
+                  >
                     <path
                       d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"
-                    />
+                    ></path>
                   </svg>
                   View source
                 </Button>
@@ -96,7 +102,8 @@ import { cn } from "@/lib/utils";
   <div
     data-overlay
     class="fixed inset-0 z-40 hidden bg-white/30 backdrop-blur-[1px] lg:hidden dark:bg-gray-950/30"
-  ></div>
+  >
+  </div>
 </div>
 
 <script>

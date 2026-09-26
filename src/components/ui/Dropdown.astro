@@ -39,7 +39,11 @@ const selectedOption = options.find((o) => o.value === selected) ?? null;
 const closedOffset = up ? "-translate-y-1" : "translate-y-1";
 ---
 
-<div class={cn("flex items-center gap-3", className)} data-dropdown={id} data-up={up ? "" : undefined}>
+<div
+  class={cn("flex items-center gap-3", className)}
+  data-dropdown={id}
+  data-up={up ? "" : undefined}
+>
   {
     label && (
       <p class="text-sm font-medium whitespace-nowrap text-gray-700 select-none dark:text-gray-200">
@@ -69,12 +73,16 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
         "aria-expanded:ring-2 aria-expanded:ring-blue-500 dark:aria-expanded:ring-blue-400 aria-expanded:border-blue-500 dark:aria-expanded:border-blue-400 aria-expanded:ring-offset-2 aria-expanded:ring-offset-white dark:aria-expanded:ring-offset-gray-900",
         !disabled &&
           "hover:border-blue-500 hover:ring-1 hover:ring-blue-300 hover:ring-offset-1 hover:ring-offset-white dark:hover:ring-offset-gray-900 dark:hover:border-blue-400 cursor-pointer",
-        disabled && "opacity-50 cursor-not-allowed bg-gray-50 dark:bg-gray-900 hover:ring-0",
+        disabled &&
+          "opacity-50 cursor-not-allowed bg-gray-50 dark:bg-gray-900 hover:ring-0",
       )}
     >
       <span
         data-trigger-label
-        class={cn("block truncate", !selectedOption && "text-gray-500 dark:text-gray-400 font-normal")}
+        class={cn(
+          "block truncate",
+          !selectedOption && "text-gray-500 dark:text-gray-400 font-normal",
+        )}
       >
         {selectedOption ? selectedOption.label : placeholder}
       </span>
@@ -137,7 +145,7 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
                 class={cn(
                   "absolute inset-y-0 right-0 flex items-center text-blue-600 dark:text-blue-400",
                   size === "sm" ? "pr-2" : "pr-3",
-                  option.value !== selected && "hidden",
+                  option.value !== selected && "invisible",
                 )}
               >
                 <CheckIcon class={size === "sm" ? "size-4" : "size-5"} />
@@ -158,9 +166,13 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
     const up = root.hasAttribute("data-up");
     const trigger = root.querySelector<HTMLButtonElement>("[data-trigger]");
     const menu = root.querySelector<HTMLElement>("[data-menu]");
-    const triggerLabel = root.querySelector<HTMLElement>("[data-trigger-label]");
+    const triggerLabel = root.querySelector<HTMLElement>(
+      "[data-trigger-label]",
+    );
     const chevron = root.querySelector<HTMLElement>("[data-chevron]");
-    const optionButtons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-option]"));
+    const optionButtons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-option]"),
+    );
     if (!trigger || !menu || !triggerLabel) return;
 
     const closedOffset = up ? "-translate-y-1" : "translate-y-1";
@@ -180,7 +192,11 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
 
     function select(value: string, label: string) {
       triggerLabel!.textContent = label;
-      triggerLabel!.classList.remove("text-gray-500", "dark:text-gray-400", "font-normal");
+      triggerLabel!.classList.remove(
+        "text-gray-500",
+        "dark:text-gray-400",
+        "font-normal",
+      );
       for (const btn of optionButtons) {
         const isSelected = btn.dataset.option === value;
         btn.setAttribute("aria-selected", String(isSelected));
@@ -188,7 +204,9 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
         btn.classList.toggle("dark:bg-gray-700", isSelected);
         btn.classList.toggle("text-blue-700", isSelected);
         btn.classList.toggle("dark:text-blue-300", isSelected);
-        btn.querySelector("[data-check]")?.classList.toggle("hidden", !isSelected);
+        btn
+          .querySelector("[data-check]")
+          ?.classList.toggle("invisible", !isSelected);
       }
       root.dispatchEvent(
         new CustomEvent("dropdown-select", {
@@ -233,7 +251,9 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
   }
 
   function initAll() {
-    document.querySelectorAll<HTMLElement>("[data-dropdown]").forEach(initDropdown);
+    document
+      .querySelectorAll<HTMLElement>("[data-dropdown]")
+      .forEach(initDropdown);
   }
 
   initAll();

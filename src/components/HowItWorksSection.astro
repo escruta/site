@@ -43,8 +43,12 @@ const steps: Step[] = [
 
     <ol class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
       {
-        steps.map((step) => (
-          <li class="flex flex-col">
+        steps.map((step, index) => (
+          <li
+            class="how-it-works-step flex flex-col"
+            data-how-it-works-step
+            style={`--reveal-delay: ${index * 0.15}s;`}
+          >
             <span class="text-xs font-semibold tracking-[0.18em] text-blue-500 select-none dark:text-blue-400">
               {step.number}
             </span>
@@ -60,3 +64,50 @@ const steps: Step[] = [
     </ol>
   </div>
 </section>
+
+<style>
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .how-it-works-step {
+      opacity: 0;
+    }
+
+    .how-it-works-step.is-visible {
+      animation: hero-fade-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+        var(--reveal-delay, 0s) both;
+    }
+  }
+</style>
+
+<script>
+  const initHowItWorksReveal = () => {
+    const steps = document.querySelectorAll<HTMLElement>(
+      "[data-how-it-works-step]",
+    );
+    if (!steps.length) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reduceMotion) {
+      steps.forEach((step) => step.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+    );
+
+    steps.forEach((step) => observer.observe(step));
+  };
+
+  initHowItWorksReveal();
+</script>

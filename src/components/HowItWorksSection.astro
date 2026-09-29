@@ -1,0 +1,62 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Step {
+  number: string;
+  title: string;
+  description: string;
+}
+
+const steps: Step[] = [
+  {
+    number: "01",
+    title: "Add your sources",
+    description:
+      "Add PDFs, documents, web pages, or YouTube videos to a notebook. Escruta extracts and indexes their content for you.",
+  },
+  {
+    number: "02",
+    title: "Ask your sources",
+    description:
+      "Ask questions and get answers grounded in your own sources, with references back to the original material.",
+  },
+  {
+    number: "03",
+    title: "Create and learn",
+    description:
+      "Generate study guides, flashcards, questionnaires, and mind maps from everything you have collected.",
+  },
+];
+---
+
+<section
+  class={cn(
+    "relative w-full bg-white px-0 text-gray-900 md:px-6",
+    "dark:bg-gray-950 dark:text-white",
+    "border-t border-gray-200 dark:border-gray-800",
+  )}
+>
+  <div
+    class="mx-auto w-full max-w-6xl border-x-0 border-gray-200 px-6 py-12 md:border-x md:px-12 md:py-16 dark:border-gray-800"
+  >
+    <h2 class="sr-only">How it works</h2>
+
+    <ol class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
+      {
+        steps.map((step) => (
+          <li class="flex flex-col">
+            <span class="text-xs font-semibold tracking-[0.18em] text-blue-500 select-none dark:text-blue-400">
+              {step.number}
+            </span>
+            <h3 class="mt-2 text-base font-semibold text-gray-900 dark:text-white">
+              {step.title}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-400">
+              {step.description}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

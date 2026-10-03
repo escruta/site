@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": "@astrojs/cloudflare/entrypoints/server",
   "name": "escruta",
-  "compatibility_date": "2025-04-04",
+  "compatibility_date": "2025-10-01",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "binding": "ASSETS",

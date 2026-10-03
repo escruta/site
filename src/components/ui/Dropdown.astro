@@ -185,7 +185,6 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
       menu!.classList.toggle("opacity-0", !next);
       menu!.classList.toggle(closedOffset, !next);
       menu!.classList.toggle("translate-y-0", next);
-      // Chevron points away from the menu when closed, toward it when open.
       chevron?.classList.remove("rotate-0", "rotate-180");
       chevron?.classList.add(next !== up ? "rotate-180" : "rotate-0");
     }
@@ -221,8 +220,6 @@ const closedOffset = up ? "-translate-y-1" : "translate-y-1";
       setOpen(!isOpen);
     });
 
-    // Silent programmatic sync (e.g. restoring a stored value on page load).
-    // Unlike a user click it doesn't move focus or scroll the page.
     (
       root as HTMLElement & { setDropdownValue?: (value: string) => void }
     ).setDropdownValue = (value: string) => {

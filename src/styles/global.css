@@ -69,23 +69,20 @@ input:-webkit-autofill:active {
   --font-sans: "Raleway", sans-serif;
   --color-*: initial;
 
-  /* White */
   --color-white: #fff;
 
-  /* Blue */
   --color-blue-50: #ebf6ff;
   --color-blue-100: #d6edff;
   --color-blue-200: #aed9ff;
   --color-blue-300: #85c5ff;
   --color-blue-400: #4babfd;
-  --color-blue-500: #0388fc; /* Base */
+  --color-blue-500: #0388fc;
   --color-blue-600: #0271d3;
   --color-blue-700: #025baa;
   --color-blue-800: #014581;
   --color-blue-900: #013058;
   --color-blue-950: #012545;
 
-  /* Gray */
   --color-gray-50: #fafafa;
   --color-gray-100: #eaeaea;
   --color-gray-200: #dadada;
@@ -98,7 +95,6 @@ input:-webkit-autofill:active {
   --color-gray-900: #1a1a1a;
   --color-gray-950: #0a0a0a;
 
-  /* Black */
   --color-black: #000;
 }
 

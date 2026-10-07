@@ -66,5 +66,24 @@ const jsonLd = JSON.stringify({
     >
       <slot />
     </div>
+    <script>
+      import Lenis from "lenis";
+      import "lenis/dist/lenis.css";
+
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (!prefersReducedMotion) {
+        new Lenis({
+          autoRaf: true,
+          anchors: true,
+          autoToggle: true,
+          allowNestedScroll: true,
+          naiveDimensions: true,
+          stopInertiaOnNavigate: true,
+        });
+      }
+    </script>
   </body>
 </html>

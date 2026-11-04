@@ -4,5 +4,5 @@ allowBuilds:
   workerd: true
 
 overrides:
-  workerd: 1.20260910.1
-  miniflare: 5.20260828.0-alpha
+  workerd: 1.20261102.1
+  miniflare: 5.20261102.0-beta

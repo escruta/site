@@ -12,14 +12,10 @@ import { cn } from "@/lib/utils";
       "border-gray-200 bg-white/85 dark:border-gray-800 dark:bg-gray-950/85",
     )}
   >
-    <div
-      class="mx-auto flex w-full max-w-6xl items-center justify-between border-x-0 border-gray-200 px-6 py-6 md:border-x md:px-12 dark:border-gray-800"
-    >
+    <div class="mx-auto flex w-full max-w-6xl items-center justify-between border-x-0 border-gray-200 px-6 py-6 md:border-x md:px-12 dark:border-gray-800">
       <div class="flex items-center gap-6">
         <a href="/" class="group flex items-center">
-          <Logotype
-            class="h-4 w-auto text-gray-900 transition-colors duration-300 group-hover:text-blue-500 dark:text-gray-50 dark:group-hover:text-blue-400"
-          />
+          <Logotype class="h-4 w-auto text-gray-900 transition-colors duration-300 group-hover:text-blue-500 dark:text-gray-50 dark:group-hover:text-blue-400" />
         </a>
       </div>
 
@@ -33,9 +29,7 @@ import { cn } from "@/lib/utils";
                 fill="currentColor"
                 class="size-4"
               >
-                <path
-                  d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"
-                ></path>
+                <path d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"></path>
               </svg>
               View source
             </Button>
@@ -58,7 +52,8 @@ import { cn } from "@/lib/utils";
             >
               <path
                 data-icon-closed
-                d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
+                d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"
+              ></path>
               <path
                 data-icon-open
                 class="hidden"
@@ -77,7 +72,7 @@ import { cn } from "@/lib/utils";
             )}
           >
             <div class="p-3">
-              <a href={repoUrl}>
+              <a href={repoUrl} target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" class="w-full">
                   <svg
                     slot="icon"
@@ -85,9 +80,7 @@ import { cn } from "@/lib/utils";
                     fill="currentColor"
                     class="size-4"
                   >
-                    <path
-                      d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"
-                    ></path>
+                    <path d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"></path>
                   </svg>
                   View source
                 </Button>
@@ -102,8 +95,7 @@ import { cn } from "@/lib/utils";
   <div
     data-overlay
     class="fixed inset-0 z-40 hidden bg-white/30 backdrop-blur-[1px] lg:hidden dark:bg-gray-950/30"
-  >
-  </div>
+  ></div>
 </div>
 
 <script>

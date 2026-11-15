@@ -1,6 +1,7 @@
 ---
 import MarketingLayout from "../layouts/MarketingLayout.astro";
 import Button from "../components/ui/Button.astro";
+import DitherHalftoneBackground from "../components/backgrounds/DitherHalftoneBackground.astro";
 
 const title = "404 - Escruta";
 const description =
@@ -8,43 +9,40 @@ const description =
 ---
 
 <MarketingLayout title={title} description={description}>
-  <main
-    class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white px-0 text-center text-gray-900 md:px-6 dark:bg-gray-950 dark:text-white"
-  >
-    <div
-      class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center space-y-6 border-x-0 border-gray-200 px-6 pt-60 md:border-x md:px-12 dark:border-gray-800"
-    >
-      <div class="space-y-2" style="animation: fade-in 0.5s ease-out both;">
-        <h1
-          class="text-6xl font-extrabold tracking-tight text-gray-900 md:text-7xl dark:text-white"
-        >
+  <section class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white px-0 text-center text-gray-900 md:px-6 dark:bg-gray-950 dark:text-white">
+    <div class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center space-y-6 border-x-0 border-gray-200 px-6 pt-56 pb-24 md:border-x md:px-12 dark:border-gray-800">
+      <DitherHalftoneBackground />
+
+      <div
+        class="relative z-10 space-y-2"
+        style="animation: fade-in 0.5s ease-out both;"
+      >
+        <h1 class="text-6xl font-extrabold tracking-tight text-gray-900 md:text-7xl dark:text-white">
           404
         </h1>
       </div>
 
       <div
-        class="space-y-4"
+        class="relative z-10 space-y-4"
         style="animation: fade-in-slight 0.4s ease-out 0.1s both;"
       >
-        <h2
-          class="text-2xl font-semibold text-gray-900 md:text-3xl dark:text-gray-100"
-        >
+        <h2 class="text-2xl font-semibold text-gray-900 md:text-3xl dark:text-gray-100">
           Lost in knowledge
         </h2>
-        <p
-          class="mx-auto max-w-md text-lg leading-relaxed text-gray-600 dark:text-gray-400"
-        >
+        <p class="mx-auto max-w-md text-lg leading-relaxed text-gray-600 dark:text-gray-400">
           The information you are looking for is currently unavailable or has
           found a new home.
         </p>
       </div>
 
-      <div style="animation: fade-in-slight 0.4s ease-out 0.2s both;">
+      <div
+        class="relative z-10"
+        style="animation: fade-in-slight 0.4s ease-out 0.2s both;"
+      >
         <a href="/">
           <Button variant="secondary">Return to Homepage</Button>
         </a>
       </div>
     </div>
-  </main>
+  </section>
 </MarketingLayout>
-s

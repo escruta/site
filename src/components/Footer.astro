@@ -1,71 +1,15 @@
 ---
-import Dropdown from "./ui/Dropdown.astro";
-import { getThemeLabel, themes } from "../lib/theme";
-
-const themeOptions = themes.map((theme) => ({
-  value: theme,
-  label: getThemeLabel(theme),
-}));
 const currentYear = new Date().getFullYear();
 ---
 
 <footer class="relative z-25 border-t border-gray-200 bg-white px-0 md:px-6 dark:border-gray-800 dark:bg-gray-950">
   <div class="relative z-30">
     <div class="mx-auto w-full max-w-6xl border-x-0 border-gray-200 px-6 py-8 md:border-x md:px-12 md:py-10 dark:border-gray-800">
-      <div class="flex flex-col items-center space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+      <div class="flex items-center justify-center">
         <div class="text-center text-sm font-medium tracking-wide text-gray-500 dark:text-gray-400">
-          Francisco Mesa &copy; {currentYear}. All rights reserved.
+          &copy; {currentYear} Francisco Mesa
         </div>
-        <Dropdown
-          id="theme-selector"
-          label="Theme"
-          options={themeOptions}
-          selected="system"
-          align="left"
-          up
-          size="sm"
-        />
       </div>
     </div>
   </div>
 </footer>
-
-<script>
-  import {
-    applyThemeClass,
-    getStoredTheme,
-    setStoredTheme,
-    type Theme,
-  } from "../lib/theme";
-
-  function initThemeSelector() {
-    const root = document.querySelector<HTMLElement>(
-      '[data-dropdown="theme-selector"]',
-    );
-    if (!root || root.dataset.themeInitialized) return;
-    root.dataset.themeInitialized = "true";
-
-    const stored = getStoredTheme();
-    (
-      root as HTMLElement & { setDropdownValue?: (value: string) => void }
-    ).setDropdownValue?.(stored);
-    applyThemeClass(stored);
-
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => {
-      if (getStoredTheme() === "system") applyThemeClass("system");
-    };
-    media.addEventListener("change", onChange);
-
-    document.addEventListener("dropdown-select", ((event: Event) => {
-      const { id, value } = (
-        event as CustomEvent<{ id: string; value: string }>
-      ).detail;
-      if (id !== "theme-selector") return;
-      setStoredTheme(value as Theme);
-    }) as EventListener);
-  }
-
-  initThemeSelector();
-  document.addEventListener("astro:after-swap", initThemeSelector);
-</script>

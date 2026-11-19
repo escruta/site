@@ -1,0 +1,97 @@
+---
+import { cn } from "@/lib/utils";
+import { repoUrl } from "../lib/config";
+import Button from "./ui/Button.astro";
+import HalftoneGlowBackground from "./backgrounds/HalftoneGlowBackground.astro";
+---
+
+<section
+  id="open-source"
+  class={cn(
+    "relative w-full scroll-mt-20 bg-white px-0 text-gray-900 md:px-6",
+    "dark:bg-gray-950 dark:text-white",
+    "border-t border-gray-200 dark:border-gray-800",
+  )}
+>
+  <div class="relative mx-auto w-full max-w-6xl overflow-hidden border-x-0 border-gray-200 px-6 py-16 md:border-x md:px-12 md:py-20 dark:border-gray-800">
+    <HalftoneGlowBackground />
+
+    <div
+      data-open-source-reveal
+      class="open-source-reveal relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center"
+    >
+      <p class="text-xs font-semibold tracking-[0.18em] text-blue-500 uppercase select-none dark:text-blue-400">
+        Open source
+      </p>
+      <h2 class="mt-3 max-w-xl text-2xl font-bold tracking-tight text-gray-900 md:text-3xl dark:text-white">
+        Built in the open, yours to inspect
+      </h2>
+      <p class="mt-3 max-w-xl text-sm leading-6 text-gray-600 md:text-base md:leading-7 dark:text-gray-400">
+        Read the code, see how everything works under the hood, or run your own
+        copy whenever you like.
+      </p>
+
+      <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+        <a href={repoUrl} target="_blank" rel="noopener noreferrer">
+          <Button variant="primary">
+            <svg
+              slot="icon"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-4"
+            >
+              <path d="M23 12L15.9289 19.0711L14.5147 17.6569L20.1716 12L14.5147 6.34317L15.9289 4.92896L23 12ZM3.82843 12L9.48528 17.6569L8.07107 19.0711L1 12L8.07107 4.92896L9.48528 6.34317L3.82843 12Z"></path>
+            </svg>
+            Explore on GitHub
+          </Button>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .open-source-reveal {
+      opacity: 0;
+    }
+
+    .open-source-reveal.is-visible {
+      animation: hero-fade-up 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+  }
+</style>
+
+<script>
+  const initOpenSourceReveal = () => {
+    const blocks = document.querySelectorAll<HTMLElement>(
+      "[data-open-source-reveal]",
+    );
+    if (!blocks.length) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reduceMotion) {
+      blocks.forEach((block) => block.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    blocks.forEach((block) => observer.observe(block));
+  };
+
+  initOpenSourceReveal();
+  document.addEventListener("astro:after-swap", initOpenSourceReveal);
+</script>

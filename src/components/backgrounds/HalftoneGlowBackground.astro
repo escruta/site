@@ -1,0 +1,476 @@
+<div
+  aria-hidden="true"
+  data-halftone-glow
+  style="animation: fade-in 1s ease-out 0.15s both;"
+  class="pointer-events-none absolute inset-0 z-0 overflow-hidden select-none"
+>
+  <div class="halftone-ambient-glow absolute -bottom-24 left-1/2 h-56 w-[70%] -translate-x-1/2 rounded-full bg-blue-300/20 blur-[100px] dark:bg-blue-600/15"></div>
+  <canvas data-halftone-glow-canvas class="block h-full w-full"></canvas>
+</div>
+
+<style>
+  @keyframes halftone-breath {
+    0%,
+    100% {
+      opacity: 0.75;
+      transform: translateX(-50%) scale(0.96);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.06);
+    }
+  }
+
+  .halftone-ambient-glow {
+    animation: halftone-breath 9.6s ease-in-out infinite;
+  }
+</style>
+
+<script>
+  const VERTEX_SHADER = `
+    attribute vec2 a_position;
+    void main() {
+      gl_Position = vec4(a_position, 0.0, 1.0);
+    }
+  `;
+
+  const FRAGMENT_SHADER = `
+    #ifdef GL_FRAGMENT_PRECISION_HIGH
+      precision highp float;
+    #else
+      precision mediump float;
+    #endif
+
+    uniform vec2 u_resolution;
+    uniform float u_dpr;
+    uniform float u_time;
+    uniform float u_isDark;
+    uniform vec2 u_mouse;
+    uniform float u_mouseActive;
+
+    float bayer2(vec2 a) {
+      a = floor(a + 0.001);
+      return fract(a.x * 0.5 + a.y * a.y * 0.75);
+    }
+
+    float bayer4(vec2 a) {
+      return bayer2(a * 0.5) * 0.25 + bayer2(a);
+    }
+
+    float bayer8(vec2 a) {
+      return (bayer4(a * 0.5) * 0.25 + bayer2(a)) + (0.5 / 64.0);
+    }
+
+    vec2 rot45(vec2 p) {
+      return vec2(p.x - p.y, p.x + p.y) * 0.70710678118;
+    }
+
+    vec2 unrot45(vec2 p) {
+      return vec2(p.x + p.y, p.y - p.x) * 0.70710678118;
+    }
+
+    float computeField(vec2 uv) {
+      float aspect = u_resolution.x / max(u_resolution.y, 1.0);
+      float isWide = smoothstep(1.1, 2.2, aspect);
+
+      // Slow, calm breathing cycle (~9.6s) expanding and softening the radial halftone halo
+      float breath = 0.5 + 0.5 * sin(u_time * 0.654);
+      float falloff = mix(2.95, 2.20, breath);
+      float strength = mix(0.50, 0.68, breath);
+
+      vec2 glowDelta = vec2(
+        (uv.x - 0.5) * mix(1.35, 1.75, isWide),
+        (uv.y + 0.08) * mix(1.45, 1.25, isWide)
+      );
+      float radialGlow = exp(-dot(glowDelta, glowDelta) * falloff) * strength;
+
+      // Soft horizontal fade near the outer borders
+      float edgeFade = smoothstep(0.0, 0.08, uv.x) * smoothstep(1.0, 0.92, uv.x);
+      float field = radialGlow * edgeFade;
+
+      // Keep the centered heading and paragraph clean while the cursor wakes surrounding dots
+      vec2 textOffset = vec2(
+        (uv.x - 0.5) * mix(1.4, 2.2, isWide),
+        (uv.y - 0.62) * mix(1.85, 2.1, isWide)
+      );
+      float textClearance = smoothstep(0.24, 0.74, length(textOffset));
+
+      // Subtle interactive halftone ink bloom following the cursor
+      vec2 mouseDelta = vec2((uv.x - u_mouse.x) * aspect, uv.y - u_mouse.y);
+      float mouseDist2 = dot(mouseDelta, mouseDelta);
+      float mouseBloom = exp(-mouseDist2 * 10.5) * u_mouseActive * 0.36;
+      field += mouseBloom * mix(0.24, 1.0, textClearance);
+
+      return clamp(field, 0.0, 1.0);
+    }
+
+    void main() {
+      float cellPx = 8.5 * u_dpr;
+
+      vec2 gridPos = rot45(gl_FragCoord.xy) / cellPx;
+      vec2 cellId = floor(gridPos);
+      vec2 cellLocal = fract(gridPos) - 0.5;
+
+      vec2 cellCenterPx = unrot45((cellId + 0.5) * cellPx);
+      vec2 cellUV = cellCenterPx / u_resolution;
+
+      float intensity = computeField(cellUV);
+      if (intensity <= 0.004) {
+        gl_FragColor = vec4(0.0);
+        return;
+      }
+
+      // Same 8x8 Bayer ordered halftone dot screen as the Hero
+      float bayer = bayer8(mod(cellId, 8.0));
+      float levels = 4.0;
+      float scaled = intensity * levels;
+      float quantized = floor(scaled) + step(bayer, fract(scaled));
+      float dotLevel = clamp(quantized / levels, 0.0, 1.0);
+
+      float radius = sqrt(dotLevel) * 0.40;
+      float dist = length(cellLocal);
+      float aa = 1.2 / cellPx;
+      float dotMask = (dotLevel > 0.001)
+        ? (1.0 - smoothstep(radius - aa, radius + aa, dist))
+        : 0.0;
+
+      // Escruta blue palette ramp matching DitherHalftoneBackground
+      vec3 lightLow  = vec3(0.522, 0.773, 1.000); // #85c5ff (blue-300)
+      vec3 lightMid  = vec3(0.294, 0.671, 0.992); // #4babfd (blue-400)
+      vec3 lightHigh = vec3(0.012, 0.533, 0.988); // #0388fc (blue-500)
+
+      vec3 darkLow   = vec3(0.004, 0.271, 0.506); // #014581 (blue-800)
+      vec3 darkMid   = vec3(0.012, 0.533, 0.988); // #0388fc (blue-500)
+      vec3 darkHigh  = vec3(0.294, 0.671, 0.992); // #4babfd (blue-400)
+
+      vec3 lightCol = (dotLevel < 0.5)
+        ? mix(lightLow, lightMid, dotLevel * 2.0)
+        : mix(lightMid, lightHigh, (dotLevel - 0.5) * 2.0);
+
+      vec3 darkCol = (dotLevel < 0.5)
+        ? mix(darkLow, darkMid, dotLevel * 2.0)
+        : mix(darkMid, darkHigh, (dotLevel - 0.5) * 2.0);
+
+      vec3 color = mix(lightCol, darkCol, u_isDark);
+      float baseAlpha = mix(
+        mix(0.20, 0.46, dotLevel),
+        mix(0.28, 0.64, dotLevel),
+        u_isDark
+      );
+
+      float alpha = dotMask * baseAlpha;
+      gl_FragColor = vec4(color * alpha, alpha);
+    }
+  `;
+
+  function compileShader(
+    gl: WebGLRenderingContext,
+    type: number,
+    source: string,
+  ): WebGLShader | null {
+    const shader = gl.createShader(type);
+    if (!shader) return null;
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      gl.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  }
+
+  function createProgram(
+    gl: WebGLRenderingContext,
+    vsSource: string,
+    fsSource: string,
+  ): WebGLProgram | null {
+    const vs = compileShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fs = compileShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    if (!vs || !fs) return null;
+
+    const program = gl.createProgram();
+    if (!program) return null;
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+
+    gl.deleteShader(vs);
+    gl.deleteShader(fs);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      gl.deleteProgram(program);
+      return null;
+    }
+    return program;
+  }
+
+  function renderFallback2D(
+    canvas: HTMLCanvasElement,
+    width: number,
+    height: number,
+    dpr: number,
+    isDark: boolean,
+  ) {
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    canvas.width = Math.max(1, Math.floor(width * dpr));
+    canvas.height = Math.max(1, Math.floor(height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const bayer4 = [
+      [0, 8, 2, 10],
+      [12, 4, 14, 6],
+      [3, 11, 1, 9],
+      [15, 7, 13, 5],
+    ];
+
+    const step = 9;
+    const cols = Math.ceil(width / step) + 2;
+    const rows = Math.ceil(height / step) + 2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * step + (r % 2 === 1 ? step * 0.5 : 0);
+        const y = r * step * 0.86;
+        const uvX = x / Math.max(width, 1);
+        const uvY = 1 - y / Math.max(height, 1);
+        const dx = (uvX - 0.5) * 1.65;
+        const dy = (uvY + 0.08) * 1.3;
+        const t = Math.exp(-(dx * dx + dy * dy) * 2.6) * 0.62;
+        if (t <= 0.02) continue;
+
+        const threshold = (bayer4[r % 4][c % 4] + 0.5) / 16;
+        const levels = 4;
+        const scaled = t * levels;
+        const level =
+          Math.floor(scaled) +
+          (scaled - Math.floor(scaled) > threshold ? 1 : 0);
+        const dotLevel = Math.min(1, level / levels);
+        if (dotLevel <= 0) continue;
+
+        const radius = Math.sqrt(dotLevel) * step * 0.34;
+        ctx.fillStyle = isDark
+          ? `rgba(56, 165, 253, ${0.26 + dotLevel * 0.36})`
+          : `rgba(3, 136, 252, ${0.2 + dotLevel * 0.28})`;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function initHalftoneGlow(root: HTMLElement) {
+    if (root.dataset.initialized) return;
+    root.dataset.initialized = "true";
+
+    const canvas = root.querySelector<HTMLCanvasElement>(
+      "[data-halftone-glow-canvas]",
+    );
+    if (!canvas) return;
+
+    const gl = canvas.getContext("webgl", {
+      alpha: true,
+      antialias: false,
+      premultipliedAlpha: true,
+      powerPreference: "low-power",
+    });
+
+    const getIsDark = () => document.documentElement.classList.contains("dark");
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let width = root.clientWidth;
+    let height = root.clientHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    if (!gl) {
+      const drawFallback = () => {
+        width = root.clientWidth;
+        height = root.clientHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        renderFallback2D(canvas, width, height, dpr, getIsDark());
+      };
+      drawFallback();
+      const ro = new ResizeObserver(drawFallback);
+      ro.observe(root);
+      const mo = new MutationObserver(drawFallback);
+      mo.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+      return;
+    }
+
+    const program = createProgram(gl, VERTEX_SHADER, FRAGMENT_SHADER);
+    if (!program) return;
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW,
+    );
+
+    const aPosition = gl.getAttribLocation(program, "a_position");
+    const uResolution = gl.getUniformLocation(program, "u_resolution");
+    const uDpr = gl.getUniformLocation(program, "u_dpr");
+    const uTime = gl.getUniformLocation(program, "u_time");
+    const uIsDark = gl.getUniformLocation(program, "u_isDark");
+    const uMouse = gl.getUniformLocation(program, "u_mouse");
+    const uMouseActive = gl.getUniformLocation(program, "u_mouseActive");
+
+    gl.useProgram(program);
+    gl.enableVertexAttribArray(aPosition);
+    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+
+    let isDark = getIsDark();
+    let isVisible = true;
+    let rafId = 0;
+    let startTime = performance.now();
+    let elapsedPaused = 2.4;
+
+    const pointer = {
+      x: 0.5,
+      y: 0.25,
+      targetX: 0.5,
+      targetY: 0.25,
+      active: 0,
+      targetActive: 0,
+    };
+
+    function resize() {
+      width = root.clientWidth;
+      height = root.clientHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const nextW = Math.max(1, Math.floor(width * dpr));
+      const nextH = Math.max(1, Math.floor(height * dpr));
+      if (canvas!.width !== nextW || canvas!.height !== nextH) {
+        canvas!.width = nextW;
+        canvas!.height = nextH;
+      }
+      gl!.viewport(0, 0, canvas!.width, canvas!.height);
+    }
+
+    function renderFrame(timeSec: number) {
+      if (!width || !height) return;
+
+      pointer.x += (pointer.targetX - pointer.x) * 0.08;
+      pointer.y += (pointer.targetY - pointer.y) * 0.08;
+      pointer.active += (pointer.targetActive - pointer.active) * 0.08;
+
+      gl!.clearColor(0, 0, 0, 0);
+      gl!.clear(gl!.COLOR_BUFFER_BIT);
+
+      gl!.uniform2f(uResolution, canvas!.width, canvas!.height);
+      gl!.uniform1f(uDpr, dpr);
+      gl!.uniform1f(uTime, timeSec);
+      gl!.uniform1f(uIsDark, isDark ? 1.0 : 0.0);
+      gl!.uniform2f(uMouse, pointer.x, pointer.y);
+      gl!.uniform1f(uMouseActive, pointer.active);
+
+      gl!.drawArrays(gl!.TRIANGLES, 0, 6);
+    }
+
+    function tick(now: number) {
+      rafId = 0;
+      if (!isVisible || document.hidden || motionQuery.matches) return;
+      const t = (now - startTime) * 0.001 + elapsedPaused;
+      renderFrame(t);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startLoop() {
+      if (motionQuery.matches) {
+        renderFrame(elapsedPaused);
+        return;
+      }
+      if (!rafId && isVisible && !document.hidden) {
+        startTime = performance.now();
+        rafId = requestAnimationFrame(tick);
+      }
+    }
+
+    function stopLoop() {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+        elapsedPaused += (performance.now() - startTime) * 0.001;
+      }
+    }
+
+    const hostSection = root.closest("section") ?? root;
+
+    hostSection.addEventListener("pointermove", (event: Event) => {
+      const pe = event as PointerEvent;
+      const rect = root.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      pointer.targetX = (pe.clientX - rect.left) / rect.width;
+      pointer.targetY = 1.0 - (pe.clientY - rect.top) / rect.height;
+      pointer.targetActive = 1.0;
+    });
+
+    hostSection.addEventListener("pointerleave", () => {
+      pointer.targetActive = 0.0;
+    });
+
+    const resizeObserver = new ResizeObserver(() => {
+      resize();
+      if (motionQuery.matches || !rafId) {
+        renderFrame(elapsedPaused);
+      }
+    });
+    resizeObserver.observe(root);
+
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0]?.isIntersecting ?? true;
+        if (isVisible) startLoop();
+        else stopLoop();
+      },
+      { threshold: 0.01 },
+    );
+    intersectionObserver.observe(root);
+
+    const themeObserver = new MutationObserver(() => {
+      const nextDark = getIsDark();
+      if (nextDark !== isDark) {
+        isDark = nextDark;
+        if (motionQuery.matches || !rafId) {
+          renderFrame(elapsedPaused);
+        }
+      }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    });
+
+    motionQuery.addEventListener("change", () => {
+      if (motionQuery.matches) {
+        stopLoop();
+        renderFrame(elapsedPaused);
+      } else {
+        startLoop();
+      }
+    });
+
+    resize();
+    startLoop();
+  }
+
+  function initAll() {
+    document
+      .querySelectorAll<HTMLElement>("[data-halftone-glow]")
+      .forEach(initHalftoneGlow);
+  }
+
+  initAll();
+  document.addEventListener("astro:after-swap", initAll);
+</script>

@@ -1,7 +1,7 @@
 ---
 import MarketingLayout from "../layouts/MarketingLayout.astro";
 import Button from "../components/ui/Button.astro";
-import DitherHalftoneBackground from "../components/backgrounds/DitherHalftoneBackground.astro";
+import SimpleHalftoneBackground from "../components/backgrounds/SimpleHalftoneBackground.astro";
 
 const title = "404 - Escruta";
 const description =
@@ -10,8 +10,8 @@ const description =
 
 <MarketingLayout title={title} description={description}>
   <section class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white px-0 text-center text-gray-900 md:px-6 dark:bg-gray-950 dark:text-white">
-    <div class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center space-y-6 border-x-0 border-gray-200 px-6 pt-56 pb-24 md:border-x md:px-12 dark:border-gray-800">
-      <DitherHalftoneBackground />
+    <div class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center gap-6 border-x-0 border-gray-200 px-6 pt-56 pb-24 md:border-x md:px-12 dark:border-gray-800">
+      <SimpleHalftoneBackground />
 
       <div
         class="relative z-10 space-y-2"

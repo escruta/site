@@ -1,0 +1,192 @@
+<div
+  aria-hidden="true"
+  data-simple-halftone
+  style="animation: fade-in 0.8s ease-out 0.15s both;"
+  class="pointer-events-none absolute inset-0 z-0 m-0 overflow-hidden select-none"
+>
+  <canvas data-simple-halftone-canvas class="block h-full w-full"></canvas>
+</div>
+
+<script>
+  const BAYER_8 = [
+    [0, 32, 8, 40, 2, 34, 10, 42],
+    [48, 16, 56, 24, 50, 18, 58, 26],
+    [12, 44, 4, 36, 14, 46, 6, 38],
+    [60, 28, 52, 20, 62, 30, 54, 22],
+    [3, 35, 11, 43, 1, 33, 9, 41],
+    [51, 19, 59, 27, 49, 17, 57, 25],
+    [15, 47, 7, 39, 13, 45, 5, 37],
+    [63, 31, 55, 23, 61, 29, 53, 21],
+  ] as const;
+
+  const CELL_PX = 8.5;
+  const LEVELS = 4;
+  const INV_SQRT2 = Math.SQRT1_2;
+  const TWO_PI = Math.PI * 2;
+
+  // Neutral grayscale ramps matching Escruta's gray tokens (no blue)
+  const LIGHT_STYLES = [
+    "rgba(160, 160, 160, 0.24)",
+    "rgba(138, 138, 138, 0.30)",
+    "rgba(116, 116, 116, 0.36)",
+    "rgba(96, 96, 96, 0.44)",
+  ] as const;
+
+  const DARK_STYLES = [
+    "rgba(128, 128, 128, 0.22)",
+    "rgba(148, 148, 148, 0.29)",
+    "rgba(170, 170, 170, 0.36)",
+    "rgba(192, 192, 192, 0.44)",
+  ] as const;
+
+  function smoothstep(edge0: number, edge1: number, x: number): number {
+    const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+    return t * t * (3 - 2 * t);
+  }
+
+  function mix(a: number, b: number, t: number): number {
+    return a + (b - a) * t;
+  }
+
+  function renderSimpleHalftone(
+    canvas: HTMLCanvasElement,
+    width: number,
+    height: number,
+    dpr: number,
+    isDark: boolean,
+  ) {
+    if (!width || !height) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const nextW = Math.max(1, Math.floor(width * dpr));
+    const nextH = Math.max(1, Math.floor(height * dpr));
+    if (canvas.width !== nextW || canvas.height !== nextH) {
+      canvas.width = nextW;
+      canvas.height = nextH;
+    }
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const aspect = width / Math.max(height, 1);
+    const isWide = smoothstep(0.55, 1.05, aspect);
+    const baseHorizon = mix(0.24, 0.34, isWide);
+    const sideLiftMax = mix(0.06, 0.09, isWide);
+    const maxHorizon = baseHorizon + sideLiftMax;
+    const minY = Math.max(0, height * (1 - maxHorizon) - CELL_PX);
+
+    const k = INV_SQRT2 / CELL_PX;
+    const minCol = Math.floor(-height * k) - 1;
+    const maxCol = Math.ceil((width - minY) * k) + 1;
+    const minRow = Math.floor(minY * k) - 1;
+    const maxRow = Math.ceil((width + height) * k) + 1;
+
+    const buckets: [number[], number[], number[], number[]] = [[], [], [], []];
+
+    for (let row = minRow; row <= maxRow; row++) {
+      const cy = row + 0.5;
+      const bayerRow = BAYER_8[row & 7];
+
+      for (let col = minCol; col <= maxCol; col++) {
+        const cx = col + 0.5;
+        const x = (cx + cy) * CELL_PX * INV_SQRT2;
+        const y = (cy - cx) * CELL_PX * INV_SQRT2;
+
+        if (
+          x < -CELL_PX ||
+          x > width + CELL_PX ||
+          y < minY - CELL_PX ||
+          y > height + CELL_PX
+        ) {
+          continue;
+        }
+
+        const uvX = x / width;
+        const uvY = 1 - y / height;
+        const edgeDist = Math.abs(uvX - 0.5) * 2;
+        const horizon = baseHorizon + edgeDist * edgeDist * sideLiftMax;
+
+        if (uvY >= horizon) continue;
+
+        const fade = smoothstep(horizon, 0, uvY);
+        const intensity = Math.pow(fade, 1.25) * 0.78;
+        if (intensity <= 0.004) continue;
+
+        const threshold = (bayerRow[col & 7] + 0.5) / 64;
+        const scaled = intensity * LEVELS;
+        const level = Math.min(
+          LEVELS,
+          Math.floor(scaled) + (scaled - Math.floor(scaled) >= threshold ? 1 : 0),
+        );
+
+        if (level <= 0) continue;
+        buckets[level - 1].push(x, y);
+      }
+    }
+
+    const styles = isDark ? DARK_STYLES : LIGHT_STYLES;
+
+    for (let i = 0; i < LEVELS; i++) {
+      const points = buckets[i];
+      if (!points.length) continue;
+
+      const dotLevel = (i + 1) / LEVELS;
+      const radius = Math.sqrt(dotLevel) * CELL_PX * 0.4;
+
+      ctx.fillStyle = styles[i];
+      ctx.beginPath();
+      for (let j = 0; j < points.length; j += 2) {
+        const px = points[j];
+        const py = points[j + 1];
+        ctx.moveTo(px + radius, py);
+        ctx.arc(px, py, radius, 0, TWO_PI);
+      }
+      ctx.fill();
+    }
+  }
+
+  function initSimpleHalftone(root: HTMLElement) {
+    if (root.dataset.initialized) return;
+    root.dataset.initialized = "true";
+
+    const canvas = root.querySelector<HTMLCanvasElement>(
+      "[data-simple-halftone-canvas]",
+    );
+    if (!canvas) return;
+
+    const getIsDark = () => document.documentElement.classList.contains("dark");
+
+    const draw = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      renderSimpleHalftone(
+        canvas,
+        root.clientWidth,
+        root.clientHeight,
+        dpr,
+        getIsDark(),
+      );
+    };
+
+    draw();
+
+    const resizeObserver = new ResizeObserver(draw);
+    resizeObserver.observe(root);
+
+    const themeObserver = new MutationObserver(draw);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+
+  function initAll() {
+    document
+      .querySelectorAll<HTMLElement>("[data-simple-halftone]")
+      .forEach(initSimpleHalftone);
+  }
+
+  initAll();
+  document.addEventListener("astro:after-swap", initAll);
+</script>
